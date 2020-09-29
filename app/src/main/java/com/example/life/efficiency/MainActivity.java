@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.example.life.efficiency.ui.main.SectionsPagerAdapter;
 
@@ -36,4 +39,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void setupShoppingList() {
+        String[] exampleArray = {"hello", "how", "are", "you"};
+
+        ListAdapter listAdapter = new ArrayAdapter<String>(this, R.layout.activity_main, exampleArray);
+
+        ListView listView = findViewById(R.id.shopping_item_list);
+        listView.setAdapter(listAdapter);
+    }
+
 }
