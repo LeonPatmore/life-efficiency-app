@@ -19,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SetItemsTask setItemsTask = new SetItemsTask();
+        GetTodayItemsTask getTodayItemsTask = new GetTodayItemsTask();
         try {
-            setupShoppingList(setItemsTask.execute().get());
+            setupShoppingList(getTodayItemsTask.execute().get());
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
