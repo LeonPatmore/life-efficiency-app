@@ -7,19 +7,34 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/listLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:visibility="visible">
 
-        <ListView
-            android:id="@+id/shopping_item_list"
+        <Button
+            android:id="@+id/addPurchase"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            tools:visibility="visible">
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/add_purchase_button_text" />
 
-        </ListView>
+        <LinearLayout
+            android:id="@+id/listLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/shopping_item_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                tools:visibility="visible">
+
+            </ListView>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

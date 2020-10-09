@@ -9,6 +9,9 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,10 +33,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupShoppingList(String[] shoppingItems) {
+        List<String> a = new ArrayList<>(Arrays.asList(shoppingItems));
+        a.add("test-item");
         ListAdapter listAdapter = new ArrayAdapter<>(this,
                 R.layout.list_item,
                 R.id.textview,
-                shoppingItems);
+                a.toArray(shoppingItems));
 
         ListView listView = findViewById(R.id.shopping_item_list);
         listView.setAdapter(listAdapter);
