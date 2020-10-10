@@ -17,14 +17,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
 
     private static final String SHOPPING_PATH = "shopping";
     private static final String SHOPPING_TODAY_PATH = "today";
+    private static final String SHOPPING_HISTORY_PATH = "history";
 
     private final URL endpoint;
     private final OkHttpClient client;
@@ -80,6 +83,31 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
     @Override
     public void acceptTodayItems() {
 
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void addPurchase(String name, int quantity) {
+        String body = String.format("{\"item\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
+        RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
+
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_HISTORY_PATH))
+                    .method("POST", requestBody)
+                    .build();
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            System.out.println("BODY " + resBody);
+            System.out.println("res " + response.code());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

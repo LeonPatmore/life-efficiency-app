@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/CoreLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -14,20 +15,58 @@
         tools:visibility="visible">
 
         <Button
-            android:id="@+id/addPurchase"
+            android:id="@+id/AddPurchaseButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:text="@string/add_purchase_button_text" />
 
-        <LinearLayout
-            android:id="@+id/listLayout"
+        <Button
+            android:id="@+id/TodaysItemsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="#FFFFFF"
+            android:text="@string/todays_item_button_text" />
+
+        <LinearLayout
+            android:id="@+id/AddPurchaseLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/PurchaseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/purchase_name_default_text"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/PurchaseQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberSigned" />
+
+            <Button
+                android:id="@+id/AddPurchaseSendButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_purchase_send_button_text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/TodaysItemsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <ListView
-                android:id="@+id/shopping_item_list"
+                android:id="@+id/ShoppingItemList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/colorAccent"

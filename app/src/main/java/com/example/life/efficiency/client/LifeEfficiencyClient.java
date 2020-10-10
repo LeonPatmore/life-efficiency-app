@@ -8,4 +8,6 @@ public interface LifeEfficiencyClient {
 
     void acceptTodayItems();
 
+    void addPurchase(String name, int quantity);
+
 }
