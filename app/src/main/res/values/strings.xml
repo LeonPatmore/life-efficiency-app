@@ -4,4 +4,5 @@
     <string name="todays_item_button_text">Today\'s Items</string>
     <string name="purchase_name_default_text">purchase name</string>
     <string name="add_purchase_send_button_text">Send</string>
+    <string name="default_quantity">1</string>
 </resources>

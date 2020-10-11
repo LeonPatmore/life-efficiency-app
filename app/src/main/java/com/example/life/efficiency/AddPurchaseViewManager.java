@@ -8,6 +8,8 @@ import com.example.life.efficiency.client.LifeEfficiencyClient;
 
 public class AddPurchaseViewManager {
 
+    private static int DEFAULT_QUANTITY = 1;
+
     private final EditText purchaseName;
     private final EditText quantity;
     private final Button send;
@@ -33,6 +35,9 @@ public class AddPurchaseViewManager {
                 sendPurchaseTask.execute(new SendPurchaseTask.SendPurchaseTaskDomain(
                         purchaseName.getText().toString(),
                         Integer.parseInt(quantity.getText().toString())));
+
+                purchaseName.setText("");
+                quantity.setText(String.valueOf(DEFAULT_QUANTITY));
             }
         });
     }

@@ -1,8 +1,10 @@
 package com.example.life.efficiency;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TODAYS_ITEMS_VIEW_NAME = "todays_items";
 
     private MultiViewManager multiViewManager;
+
+    private static ItemStateManager itemStateManager = new ItemStateManager();
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -108,6 +112,18 @@ public class MainActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.ShoppingItemList);
         listView.setAdapter(listAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = view.toString();
+                System.out.println(item);
+                boolean active = itemStateManager.flipItem(item);
+                int colour = active ? Color.GREEN : Color.RED;
+                view.setBackgroundColor(colour);
+            }
+        });
     }
 
 }

@@ -48,7 +48,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:text="@string/default_quantity"
+                tools:text="@string/default_quantity" />
 
             <Button
                 android:id="@+id/AddPurchaseSendButton"
@@ -69,10 +71,17 @@
                 android:id="@+id/ShoppingItemList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent"
+                android:background="@color/cardview_light_background"
                 tools:visibility="visible">
 
             </ListView>
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
         </LinearLayout>
     </LinearLayout>
 
