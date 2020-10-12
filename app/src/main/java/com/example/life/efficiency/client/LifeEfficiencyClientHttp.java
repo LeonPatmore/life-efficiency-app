@@ -1,6 +1,7 @@
 package com.example.life.efficiency.client;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -24,6 +25,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
+
+    private static final String TAG = "LifeEfficiencyClient";
 
     private static final String SHOPPING_PATH = "shopping";
     private static final String SHOPPING_TODAY_PATH = "today";
@@ -82,12 +85,15 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
 
     @Override
     public void acceptTodayItems() {
-
+        Log.i(TAG, "Accepting all of today's items!");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void addPurchase(String name, int quantity) {
+        Log.i(TAG, String.format("Adding a purchase with name [ %s ] and quantity [ %d ]",
+                name,
+                quantity));
         String body = String.format("{\"item\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
         RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
 

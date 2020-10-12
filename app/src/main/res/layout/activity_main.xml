@@ -54,7 +54,7 @@
 
             <Button
                 android:id="@+id/AddPurchaseSendButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/add_purchase_send_button_text" />
 
@@ -77,10 +77,11 @@
             </ListView>
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/ConfirmTodayButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="@string/confirm_today_button_text"
+                tools:text="@string/confirm_today_button_text" />
 
         </LinearLayout>
     </LinearLayout>

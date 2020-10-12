@@ -1,4 +1,4 @@
-package com.example.life.efficiency;
+package com.example.life.efficiency.tasks;
 
 import android.os.AsyncTask;
 import android.os.Build;
