@@ -15,19 +15,23 @@ public class ItemStateManager {
 
     private Map<String, Boolean> itemStates = new HashMap<>();
 
+    public void clear() {
+        itemStates.clear();
+    }
+
     public boolean itemActive(String item) {
         if (itemStates.containsKey(item) && itemStates.get(item) != null) {
-            return itemStates.get(item);
-        } else {
-            itemStates.put(item, Boolean.TRUE);
-            return true;
+            Boolean itemBoolean = itemStates.get(item);
+            if (itemBoolean != null)
+                return itemBoolean;
         }
+        itemStates.put(item, Boolean.TRUE);
+        return true;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean flipItem(String item) {
         itemStates.put(item, !itemActive(item));
-        System.out.println("Set " + item + " to " + itemStates.get(item));
         return Optional.ofNullable(itemStates.get(item)).orElse(Boolean.TRUE);
     }
 
@@ -46,9 +50,9 @@ public class ItemStateManager {
         List<String> activeList = new ArrayList<>();
         for(String item : itemStates.keySet()) {
             Boolean ifActive = itemStates.get(item);
-            if (ifActive != null && ifActive)
-                System.out.println("Adding " + item);
+            if (ifActive != null && ifActive) {
                 activeList.add(item);
+            }
         }
         return activeList;
     }

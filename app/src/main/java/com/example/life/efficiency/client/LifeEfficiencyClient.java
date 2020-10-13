@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface LifeEfficiencyClient {
 
-    List<String> getTodayItems();
+    List<String> getTodayItems() throws LifeEfficiencyException;
 
-    void acceptTodayItems();
+    void acceptTodayItems() throws LifeEfficiencyException;
 
-    void addPurchase(String name, int quantity);
+    void addPurchase(String name, int quantity) throws LifeEfficiencyException;
 
 }

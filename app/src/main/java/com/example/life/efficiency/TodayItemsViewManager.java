@@ -54,6 +54,7 @@ public class TodayItemsViewManager {
                 R.id.textview,
                 todayItems.toArray(new String[]{}));
 
+        itemStateManager.clear();
         for (String item : todayItems) {
             itemStateManager.itemActive(item);
         }
@@ -63,7 +64,8 @@ public class TodayItemsViewManager {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                boolean active = itemStateManager.flipItem(view.toString());
+                Log.i(TAG, "Flipping " + listView.getItemAtPosition(position));
+                boolean active = itemStateManager.flipItem((String) listView.getItemAtPosition(position));
                 int colour = active ? ACTIVE_COLOUR : INACTIVE_COLOUR;
                 view.setBackgroundColor(colour);
             }
@@ -82,9 +84,12 @@ public class TodayItemsViewManager {
 
     @RequiresApi(api = Build.VERSION_CODES.R)
     private void confirm() {
-        if (itemStateManager.allActive())
+        if (itemStateManager.allActive()) {
+            Log.i(TAG, "Accepting all of today's items!");
             new AcceptTodayItemsTask().execute();
-        else {
+        } else {
+            Log.i(TAG,
+                    "Accepting items individually since not all of today's have been accepted!");
             for (String item : itemStateManager.getActiveItems()) {
                 SendPurchaseTask sendPurchaseTask = new SendPurchaseTask();
                 sendPurchaseTask.execute(new SendPurchaseTask.SendPurchaseTaskDomain(item, 1));

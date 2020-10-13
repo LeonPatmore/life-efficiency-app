@@ -1,5 +1,6 @@
 package com.example.life.efficiency.client;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.util.Log;
 
@@ -25,6 +26,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
+
+    private static final String POST_METHOD = "POST";
 
     private static final String TAG = "LifeEfficiencyClient";
 
@@ -55,23 +58,27 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<String> getTodayItems() {
+    public List<String> getTodayItems() throws LifeEfficiencyException {
+        Log.i(TAG, "Getting today's items!");
+
         Request request;
         try {
             request = new Request.Builder()
                     .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_TODAY_PATH))
                     .build();
         } catch (URISyntaxException | MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new LifeEfficiencyException("Problem constructing HTTP request!", e);
         }
 
         try (Response response = client.newCall(request).execute()) {
-            String body = Objects.requireNonNull(response.body()).string();
-            System.out.println("BODY " + body);
-            JSONObject jsonObject = new JSONObject(body);
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+            JSONObject jsonObject = new JSONObject(resBody);
             return jsonArrayToList(jsonObject.getJSONArray("items"));
         } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
         }
     }
 
@@ -83,36 +90,63 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         return stringArrayList;
     }
 
-    @Override
-    public void acceptTodayItems() {
-        Log.i(TAG, "Accepting all of today's items!");
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void addPurchase(String name, int quantity) {
-        Log.i(TAG, String.format("Adding a purchase with name [ %s ] and quantity [ %d ]",
-                name,
-                quantity));
-        String body = String.format("{\"item\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
-        RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
+    public void acceptTodayItems() throws LifeEfficiencyException {
+        Log.i(TAG, "Accepting today's items!");
 
         Request request;
         try {
             request = new Request.Builder()
-                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_HISTORY_PATH))
-                    .method("POST", requestBody)
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_TODAY_PATH))
+                    .method(POST_METHOD, RequestBody.create(
+                            "",
+                            MediaType.get("text/plain")))
                     .build();
         } catch (URISyntaxException | MalformedURLException e) {
-            throw new RuntimeException(e);
+            throw new LifeEfficiencyException("Problem constructing HTTP request!", e);
         }
 
         try (Response response = client.newCall(request).execute()) {
             String resBody = Objects.requireNonNull(response.body()).string();
-            System.out.println("BODY " + resBody);
-            System.out.println("res " + response.code());
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void addPurchase(String name, int quantity) throws LifeEfficiencyException {
+        Log.i(TAG, String.format("Adding a purchase with name [ %s ] and quantity [ %d ]",
+                name,
+                quantity));
+
+        @SuppressLint("DefaultLocale") String body =
+                String.format("{\"item\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
+        RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_HISTORY_PATH))
+                    .method(POST_METHOD, requestBody)
+                    .build();
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new LifeEfficiencyException("Problem constructing HTTP request!", e);
+        }
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+
+            if (response.code() != 200)
+                throw new LifeEfficiencyException("Unexpected response code from endpoint!");
+        } catch (IOException e) {
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
         }
     }
 
