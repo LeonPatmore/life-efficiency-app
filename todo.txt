@@ -1,0 +1,3 @@
+13/10/2020 Add app icon
+13/10/2020 Add tests
+13/10/2020 Setup CI
