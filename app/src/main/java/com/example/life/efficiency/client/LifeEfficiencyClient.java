@@ -10,4 +10,6 @@ public interface LifeEfficiencyClient {
 
     void addPurchase(String name, int quantity) throws LifeEfficiencyException;
 
+    void addToList(String name, int quantity) throws LifeEfficiencyException;
+
 }

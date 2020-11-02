@@ -46,7 +46,7 @@ public class TodayItemsViewManager {
         setupConfirmButton();
     }
 
-    private void refreshList() throws ExecutionException, InterruptedException {
+    public void refreshList() throws ExecutionException, InterruptedException {
         GetTodayItemsTask getTodayItemsTask = new GetTodayItemsTask();
         List<String> todayItems = new ArrayList<>(Arrays.asList(getTodayItemsTask.execute().get()));
         ListAdapter listAdapter = new ArrayAdapter<>(context,

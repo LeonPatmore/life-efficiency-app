@@ -6,4 +6,7 @@
     <string name="add_purchase_send_button_text">Send</string>
     <string name="default_quantity">1</string>
     <string name="confirm_today_button_text">Confirm</string>
+    <string name="add_item_to_list_button_text">Add to List</string>
+    <string name="add_to_list_send_button_text">Send</string>
+    <string name="quantity_button_hint">Quantity</string>
 </resources>

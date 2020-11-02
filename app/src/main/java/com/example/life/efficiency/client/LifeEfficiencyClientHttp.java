@@ -34,6 +34,7 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
     private static final String SHOPPING_PATH = "shopping";
     private static final String SHOPPING_TODAY_PATH = "today";
     private static final String SHOPPING_HISTORY_PATH = "history";
+    private static final String SHOPPING_LIST_PATH = "list";
 
     private final URL endpoint;
     private final OkHttpClient client;
@@ -131,6 +132,39 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         try {
             request = new Request.Builder()
                     .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_HISTORY_PATH))
+                    .method(POST_METHOD, requestBody)
+                    .build();
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new LifeEfficiencyException("Problem constructing HTTP request!", e);
+        }
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+
+            if (response.code() != 200)
+                throw new LifeEfficiencyException("Unexpected response code from endpoint!");
+        } catch (IOException e) {
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void addToList(String name, int quantity) throws LifeEfficiencyException {
+        Log.i(TAG, String.format("Adding item to list with name [ %s ] and quantity [ %d ]",
+                name,
+                quantity));
+
+        @SuppressLint("DefaultLocale") String body =
+                String.format("{\"item\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
+        RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_LIST_PATH))
                     .method(POST_METHOD, requestBody)
                     .build();
         } catch (URISyntaxException | MalformedURLException e) {

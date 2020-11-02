@@ -6,9 +6,9 @@ import java.util.Map;
 
 public class MultiViewManager {
 
-    private final Map<String, View> viewToLayoutId;
+    private final Map<String, ActiveView> viewToLayoutId;
 
-    public MultiViewManager(Map<String, View> viewToLayoutId) {
+    public MultiViewManager(Map<String, ActiveView> viewToLayoutId) {
         this.viewToLayoutId = viewToLayoutId;
     }
 
@@ -17,9 +17,12 @@ public class MultiViewManager {
             throw new ViewNotFoundException(viewName);
         }
 
-        for (View view : viewToLayoutId.values()) {
-            if (view != viewToLayoutId.get(viewName)) view.setVisibility(View.GONE);
-            else view.setVisibility(View.VISIBLE);
+        for (ActiveView activeView : viewToLayoutId.values()) {
+            if (activeView != viewToLayoutId.get(viewName)) activeView.getView().setVisibility(View.GONE);
+            else {
+                activeView.onActive();
+                activeView.getView().setVisibility(View.VISIBLE);
+            }
         }
     }
 

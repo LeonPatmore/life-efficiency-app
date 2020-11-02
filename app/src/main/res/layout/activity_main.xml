@@ -28,6 +28,46 @@
             android:background="#FFFFFF"
             android:text="@string/todays_item_button_text" />
 
+        <Button
+            android:id="@+id/AddItemToListButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/add_item_to_list_button_text" />
+
+        <LinearLayout
+            android:id="@+id/AddToListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/AddToListPurchaseName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/purchase_name_default_text"
+                android:inputType="textShortMessage"
+                android:autofillHints="purchase"/>
+
+            <EditText
+                android:id="@+id/AddToListPurchaseQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="quantity"
+                android:hint="@string/quantity_button_hint"
+                android:inputType="numberSigned"
+                android:text="@string/default_quantity" />
+
+            <Button
+                android:id="@+id/AddToListSendButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_to_list_send_button_text"
+                tools:text="@string/add_to_list_send_button_text" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/AddPurchaseLayout"
             android:layout_width="match_parent"
@@ -41,13 +81,16 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="@string/purchase_name_default_text"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="purchase"/>
 
             <EditText
                 android:id="@+id/PurchaseQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="quantity"
                 android:ems="10"
+                android:hint="@string/quantity_button_hint"
                 android:inputType="numberSigned"
                 android:text="@string/default_quantity"
                 tools:text="@string/default_quantity" />
