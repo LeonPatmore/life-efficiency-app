@@ -14,8 +14,8 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 
 import com.example.life.efficiency.tasks.AcceptTodayItemsTask;
+import com.example.life.efficiency.tasks.CompleteItemsTask;
 import com.example.life.efficiency.tasks.GetTodayItemsTask;
-import com.example.life.efficiency.tasks.SendPurchaseTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,12 +88,9 @@ public class TodayItemsViewManager {
             Log.i(TAG, "Accepting all of today's items!");
             new AcceptTodayItemsTask().execute();
         } else {
-            Log.i(TAG,
-                    "Accepting items individually since not all of today's have been accepted!");
-            for (String item : itemStateManager.getActiveItems()) {
-                SendPurchaseTask sendPurchaseTask = new SendPurchaseTask();
-                sendPurchaseTask.execute(new SendPurchaseTask.SendPurchaseTaskDomain(item, 1));
-            }
+            Log.i(TAG,"Accepting a subset of today's items!");
+            CompleteItemsTask completeItemsTask = new CompleteItemsTask();
+            completeItemsTask.execute(itemStateManager.getActiveItems());
         }
         try {
             refreshList();

@@ -12,4 +12,6 @@ public interface LifeEfficiencyClient {
 
     void addToList(String name, int quantity) throws LifeEfficiencyException;
 
+    void completeItems(List<String> items) throws LifeEfficiencyException;
+
 }
