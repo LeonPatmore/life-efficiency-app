@@ -10,6 +10,25 @@ public class MultiViewManager {
 
     public MultiViewManager(Map<String, ActiveView> viewToLayoutId) {
         this.viewToLayoutId = viewToLayoutId;
+        setupButtons();
+    }
+
+    public void setupButtons() {
+        for (final String viewName : viewToLayoutId.keySet()) {
+            ActiveView thisView = viewToLayoutId.get(viewName);
+            if (thisView == null)
+                continue;
+            thisView.getButton().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        changeView(viewName);
+                    } catch (ViewNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
     }
 
     public void changeView(String viewName) throws ViewNotFoundException {

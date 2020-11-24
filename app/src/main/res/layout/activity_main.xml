@@ -35,6 +35,13 @@
             android:background="#FFFFFF"
             android:text="@string/add_item_to_list_button_text" />
 
+        <Button
+            android:id="@+id/RepeatingItemsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/repeating_items_button_view" />
+
         <LinearLayout
             android:id="@+id/AddToListLayout"
             android:layout_width="match_parent"
@@ -126,6 +133,19 @@
                 android:text="@string/confirm_today_button_text"
                 tools:text="@string/confirm_today_button_text" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/RepeatingItemsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ListView
+                android:id="@+id/RepeatingItemsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 

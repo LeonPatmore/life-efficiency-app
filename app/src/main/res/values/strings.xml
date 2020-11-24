@@ -9,4 +9,5 @@
     <string name="add_item_to_list_button_text">Add to List</string>
     <string name="add_to_list_send_button_text">Send</string>
     <string name="quantity_button_hint">Quantity</string>
+    <string name="repeating_items_button_view">Repeating Items</string>
 </resources>

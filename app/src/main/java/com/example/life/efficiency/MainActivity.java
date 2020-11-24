@@ -2,7 +2,6 @@ package com.example.life.efficiency;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.life.efficiency.views.ActiveView;
 import com.example.life.efficiency.views.MultiViewManager;
-import com.example.life.efficiency.views.ViewNotFoundException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String ADD_PURCHASE_VIEW_NAME = "add_purchase";
     private static final String TODAYS_ITEMS_VIEW_NAME = "todays_items";
     private static final String ADD_TO_LIST_VIEW_NAME = "add_to_list";
-
-    private MultiViewManager multiViewManager;
+    private static final String REPEATING_ITEMS_VIEW_NAME = "repeating_items";
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -35,16 +32,16 @@ public class MainActivity extends AppCompatActivity {
 
         TodayItemsViewManager todayItemsViewManager = setupViews();
         setupViewManager(todayItemsViewManager);
-        setupButtons();
     }
 
     private void setupViewManager(final TodayItemsViewManager todayItemsViewManager) {
         LinearLayout addPurchaseLayout = findViewById(R.id.AddPurchaseLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout addToListLayout = findViewById(R.id.AddToListLayout);
+        LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
-        viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new ActiveView(addPurchaseLayout));
-        viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout) {
+        viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new ActiveView(addPurchaseLayout, (Button) findViewById(R.id.AddPurchaseButton)));
+        viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, (Button) findViewById(R.id.TodaysItemsButton)) {
             @Override
             public void onActive() {
                 try {
@@ -54,46 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        viewManagerMap.put(ADD_TO_LIST_VIEW_NAME, new ActiveView(addToListLayout));
-        this.multiViewManager = new MultiViewManager(viewManagerMap);
-    }
-
-    private void setupButtons() {
-        Button addPurchaseButton = findViewById(R.id.AddPurchaseButton);
-        addPurchaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    multiViewManager.changeView(ADD_PURCHASE_VIEW_NAME);
-                } catch (ViewNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        Button todaysItemButton = findViewById(R.id.TodaysItemsButton);
-        todaysItemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    multiViewManager.changeView(TODAYS_ITEMS_VIEW_NAME);
-                } catch (ViewNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        Button addToListButton = findViewById(R.id.AddItemToListButton);
-        addToListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    multiViewManager.changeView(ADD_TO_LIST_VIEW_NAME);
-                } catch (ViewNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        viewManagerMap.put(ADD_TO_LIST_VIEW_NAME, new ActiveView(addToListLayout, (Button) findViewById(R.id.AddItemToListButton)));
+        viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new ActiveView(repeatingItemsLayout, (Button) findViewById(R.id.RepeatingItemsButton)));
+        new MultiViewManager(viewManagerMap);
     }
 
     private TodayItemsViewManager setupViews() {
