@@ -24,17 +24,20 @@ public class MainActivity extends AppCompatActivity {
     private static final String ADD_TO_LIST_VIEW_NAME = "add_to_list";
     private static final String REPEATING_ITEMS_VIEW_NAME = "repeating_items";
 
+    private RepeatingItemsViewManager repeatingItemsViewManager;
+    private TodayItemsViewManager todayItemsViewManager;
+
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TodayItemsViewManager todayItemsViewManager = setupViews();
-        setupViewManager(todayItemsViewManager);
+        setupViews();
+        setupViewManager();
     }
 
-    private void setupViewManager(final TodayItemsViewManager todayItemsViewManager) {
+    private void setupViewManager() {
         LinearLayout addPurchaseLayout = findViewById(R.id.AddPurchaseLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout addToListLayout = findViewById(R.id.AddToListLayout);
@@ -52,27 +55,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         viewManagerMap.put(ADD_TO_LIST_VIEW_NAME, new ActiveView(addToListLayout, (Button) findViewById(R.id.AddItemToListButton)));
-        viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new ActiveView(repeatingItemsLayout, (Button) findViewById(R.id.RepeatingItemsButton)));
+        viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new ActiveView(repeatingItemsLayout, (Button) findViewById(R.id.RepeatingItemsButton)) {
+            @Override
+            public void onActive() {
+                try {
+                    repeatingItemsViewManager.setupList();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         new MultiViewManager(viewManagerMap);
     }
 
-    private TodayItemsViewManager setupViews() {
+    private void setupViews() {
         new AddPurchaseViewManager((EditText) findViewById(R.id.PurchaseName),
                 (EditText) findViewById(R.id.PurchaseQuantity),
                 (Button) findViewById(R.id.AddPurchaseSendButton));
         new AddToListViewManager((EditText) findViewById(R.id.AddToListPurchaseName),
                 (EditText) findViewById(R.id.AddToListPurchaseQuantity),
                 (Button) findViewById(R.id.AddToListSendButton));
+        try {
+            repeatingItemsViewManager =  new RepeatingItemsViewManager(
+                    (ListView) findViewById(R.id.RepeatingItemsList),
+                    getApplicationContext());
+        } catch (ExecutionException | InterruptedException e) {
+            System.err.println("Could not create repeating items view manager!");
+            e.printStackTrace();
+        }
 
         try {
-            return new TodayItemsViewManager((ListView) findViewById(R.id.ShoppingItemList),
+            todayItemsViewManager = new TodayItemsViewManager((ListView) findViewById(R.id.ShoppingItemList),
                     getApplicationContext(),
                     (Button) findViewById(R.id.ConfirmTodayButton));
         } catch (ExecutionException | InterruptedException e) {
             System.err.println("Could not create today's item view manager!");
             e.printStackTrace();
         }
-        return null;
     }
 
 }

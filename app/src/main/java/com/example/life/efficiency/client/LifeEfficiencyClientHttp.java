@@ -36,6 +36,7 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
     private static final String SHOPPING_HISTORY_PATH = "history";
     private static final String SHOPPING_LIST_PATH = "list";
     private static final String SHOPPING_ITEMS_PATH = "items";
+    private static final String SHOPPING_REPEATING_PATH = "repeating";
 
     private final URL endpoint;
     private final OkHttpClient client;
@@ -214,6 +215,32 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
             if (response.code() != 200)
                 throw new LifeEfficiencyException("Unexpected response code from endpoint!");
         } catch (IOException e) {
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public List<String> getRepeatingItems() throws LifeEfficiencyException {
+        Log.i(TAG, "Getting repeated items!");
+
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_REPEATING_PATH))
+                    .build();
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new LifeEfficiencyException("Problem constructing HTTP request!", e);
+        }
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+            JSONObject jsonObject = new JSONObject(resBody);
+            return jsonArrayToList(jsonObject.getJSONArray("items"));
+        } catch (IOException | JSONException e) {
             throw new LifeEfficiencyException("Problem during HTTP call!", e);
         }
     }
