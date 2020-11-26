@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TODAYS_ITEMS_VIEW_NAME = "todays_items";
     private static final String ADD_TO_LIST_VIEW_NAME = "add_to_list";
     private static final String REPEATING_ITEMS_VIEW_NAME = "repeating_items";
+    private static final String ADD_REPEATING_ITEMS_VIEW_NAME = "add_repeating_items";
 
     private RepeatingItemsViewManager repeatingItemsViewManager;
     private TodayItemsViewManager todayItemsViewManager;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout addToListLayout = findViewById(R.id.AddToListLayout);
         LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
+        LinearLayout addRepeatingItemLayout = findViewById(R.id.AddRepeatingItemLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
         viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new ActiveView(addPurchaseLayout, (Button) findViewById(R.id.AddPurchaseButton)));
         viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, (Button) findViewById(R.id.TodaysItemsButton)) {
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        viewManagerMap.put(ADD_REPEATING_ITEMS_VIEW_NAME, new ActiveView(addRepeatingItemLayout, (Button) findViewById(R.id.AddRepeatingItemViewButton)));
         new MultiViewManager(viewManagerMap);
     }
 

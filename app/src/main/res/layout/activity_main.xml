@@ -42,6 +42,13 @@
             android:background="#FFFFFF"
             android:text="@string/repeating_items_button_view" />
 
+        <Button
+            android:id="@+id/AddRepeatingItemViewButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/add_repeating_item_view_button_text" />
+
         <LinearLayout
             android:id="@+id/AddToListLayout"
             android:layout_width="match_parent"
@@ -121,7 +128,7 @@
                 android:id="@+id/ShoppingItemList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/cardview_light_background"
+                android:background="#ffffff"
                 tools:visibility="visible">
 
             </ListView>
@@ -133,6 +140,29 @@
                 android:text="@string/confirm_today_button_text"
                 tools:text="@string/confirm_today_button_text" />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/AddRepeatingItemLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <EditText
+                android:id="@+id/AddRepeatingItemItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/add_repeating_item_item_default_text"
+                android:inputType="textPersonName"
+                android:autofillHints="repeating_item"/>
+
+            <Button
+                android:id="@+id/AddRepatingItemButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_repeating_item_button_text" />
         </LinearLayout>
 
         <LinearLayout
