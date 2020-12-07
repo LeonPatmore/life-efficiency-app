@@ -1,3 +1,4 @@
 13/10/2020 Add app icon
 13/10/2020 Add tests
 13/10/2020 Setup CI
+07/12/2020 Setup add repeating item view manager.

@@ -16,4 +16,6 @@ public interface LifeEfficiencyClient {
 
     List<String> getRepeatingItems() throws LifeEfficiencyException;
 
+    void addRepeatingItem(String item) throws LifeEfficiencyException;
+
 }
