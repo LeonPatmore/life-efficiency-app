@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">LifeEfficiencyApp</string>
     <string name="add_purchase_button_text">Add Purchase</string>
+    <string name="item_list_button_text">Item List</string>
     <string name="todays_item_button_text">Today\'s Items</string>
-    <string name="purchase_name_default_text">purchase name</string>
+    <string name="purchase_name_default_text">item name</string>
     <string name="add_purchase_send_button_text">Send</string>
     <string name="default_quantity">1</string>
     <string name="confirm_today_button_text">Confirm</string>

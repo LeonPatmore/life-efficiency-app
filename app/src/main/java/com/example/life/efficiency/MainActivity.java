@@ -20,6 +20,7 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     private static final String ADD_PURCHASE_VIEW_NAME = "add_purchase";
+    private static final String ITEM_LIST_VIEW_NAME = "item_list";
     private static final String TODAYS_ITEMS_VIEW_NAME = "todays_items";
     private static final String ADD_TO_LIST_VIEW_NAME = "add_to_list";
     private static final String REPEATING_ITEMS_VIEW_NAME = "repeating_items";
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RepeatingItemsViewManager repeatingItemsViewManager;
     private TodayItemsViewManager todayItemsViewManager;
+    private ItemListViewManager itemListViewManager;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -40,12 +42,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewManager() {
         LinearLayout addPurchaseLayout = findViewById(R.id.AddPurchaseLayout);
+        LinearLayout itemListLayout = findViewById(R.id.ItemListLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout addToListLayout = findViewById(R.id.AddToListLayout);
         LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
         LinearLayout addRepeatingItemLayout = findViewById(R.id.AddRepeatingItemLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
         viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new ActiveView(addPurchaseLayout, (Button) findViewById(R.id.AddPurchaseButton)));
+        viewManagerMap.put(ITEM_LIST_VIEW_NAME, new ActiveView(itemListLayout, (Button) findViewById(R.id.itemListButton)) {
+            @Override
+            public void onActive() {
+                try {
+                    itemListViewManager.refreshList();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, (Button) findViewById(R.id.TodaysItemsButton)) {
             @Override
             public void onActive() {
@@ -93,6 +106,15 @@ public class MainActivity extends AppCompatActivity {
                     (Button) findViewById(R.id.ConfirmTodayButton));
         } catch (ExecutionException | InterruptedException e) {
             System.err.println("Could not create today's item view manager!");
+            e.printStackTrace();
+        }
+
+        try {
+            itemListViewManager = new ItemListViewManager(
+                    (ListView) findViewById(R.id.ItemList),
+                    getApplicationContext());
+        } catch (ExecutionException | InterruptedException e) {
+            System.err.println("Could not create item list view manager!");
             e.printStackTrace();
         }
     }

@@ -29,7 +29,7 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
 
     private static final String POST_METHOD = "POST";
 
-    private static final String TAG = "LifeEfficiencyClient";
+    private final String TAG = getClass().getName();
 
     private static final String SHOPPING_PATH = "shopping";
     private static final String SHOPPING_TODAY_PATH = "today";
@@ -57,6 +57,32 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
                 currentPath + "/" + endPath;
         return new URI(endpoint.getProtocol(), endpoint.getHost(), finalPath, null)
                 .toURL();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public List<String> getListItems() throws LifeEfficiencyException {
+        Log.i(TAG, "Getting list items!");
+
+        Request request;
+        try {
+            request = new Request.Builder()
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_LIST_PATH))
+                    .build();
+        } catch (URISyntaxException | MalformedURLException e) {
+            throw new LifeEfficiencyException("Problem constructing HTTP request!", e);
+        }
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+            JSONObject jsonObject = new JSONObject(resBody);
+            return jsonArrayToList(jsonObject.getJSONArray("items"));
+        } catch (IOException | JSONException e) {
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -161,7 +187,7 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
                 quantity));
 
         @SuppressLint("DefaultLocale") String body =
-                String.format("{\"item\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
+                String.format("{\"name\": \"%s\", \"quantity\": \"%d\"}", name, quantity);
         RequestBody requestBody = RequestBody.create(body, MediaType.get("application/json"));
         Request request;
         try {

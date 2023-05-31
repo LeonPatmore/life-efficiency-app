@@ -22,6 +22,13 @@
             android:text="@string/add_purchase_button_text" />
 
         <Button
+            android:id="@+id/itemListButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/item_list_button_text" />
+
+        <Button
             android:id="@+id/TodaysItemsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +55,22 @@
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
             android:text="@string/add_repeating_item_view_button_text" />
+
+        <LinearLayout
+            android:id="@+id/ItemListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ListView
+                android:id="@+id/ItemList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                tools:visibility="visible"></ListView>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/AddToListLayout"

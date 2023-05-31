@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface LifeEfficiencyClient {
 
+    List<String> getListItems() throws LifeEfficiencyException;
+
     List<String> getTodayItems() throws LifeEfficiencyException;
 
     void acceptTodayItems() throws LifeEfficiencyException;

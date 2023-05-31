@@ -11,10 +11,9 @@ import com.example.life.efficiency.client.LifeEfficiencyException;
 
 import java.net.MalformedURLException;
 
-public class AddItemTask
-        extends AsyncTask<AddItemTask.AddItemTaskDomain, Void, Void> {
+public class AddItemTask extends AsyncTask<AddItemTask.AddItemTaskDomain, Void, Void> {
 
-    private static final String TAG = "AddItemTask";
+    private final String TAG = getClass().getName();
 
     public static class AddItemTaskDomain {
 
