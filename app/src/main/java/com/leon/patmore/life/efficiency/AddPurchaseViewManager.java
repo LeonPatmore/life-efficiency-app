@@ -1,6 +1,5 @@
 package com.leon.patmore.life.efficiency;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -8,7 +7,7 @@ import com.leon.patmore.life.efficiency.tasks.SendPurchaseTask;
 
 public class AddPurchaseViewManager {
 
-    private static int DEFAULT_QUANTITY = 1;
+    private static final int DEFAULT_QUANTITY = 1;
 
     private final EditText purchaseName;
     private final EditText quantity;
@@ -24,17 +23,14 @@ public class AddPurchaseViewManager {
     }
 
     private void initView() {
-        this.send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SendPurchaseTask sendPurchaseTask = new SendPurchaseTask();
-                sendPurchaseTask.execute(new SendPurchaseTask.SendPurchaseTaskDomain(
-                        purchaseName.getText().toString(),
-                        Integer.parseInt(quantity.getText().toString())));
+        this.send.setOnClickListener(v -> {
+            SendPurchaseTask sendPurchaseTask = new SendPurchaseTask();
+            sendPurchaseTask.execute(new SendPurchaseTask.SendPurchaseTaskDomain(
+                    purchaseName.getText().toString(),
+                    Integer.parseInt(quantity.getText().toString())));
 
-                purchaseName.setText("");
-                quantity.setText(String.valueOf(DEFAULT_QUANTITY));
-            }
+            purchaseName.setText("");
+            quantity.setText(String.valueOf(DEFAULT_QUANTITY));
         });
     }
 

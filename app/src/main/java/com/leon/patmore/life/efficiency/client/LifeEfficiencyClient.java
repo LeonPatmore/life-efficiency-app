@@ -1,10 +1,12 @@
 package com.leon.patmore.life.efficiency.client;
 
+import com.leon.patmore.life.efficiency.client.domain.ListItem;
+
 import java.util.List;
 
 public interface LifeEfficiencyClient {
 
-    List<String> getListItems() throws LifeEfficiencyException;
+    List<ListItem> getListItems() throws LifeEfficiencyException;
 
     List<String> getTodayItems() throws LifeEfficiencyException;
 

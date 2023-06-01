@@ -1,10 +1,9 @@
 package com.leon.patmore.life.efficiency.client;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.util.Log;
 
-import androidx.annotation.RequiresApi;
+import com.leon.patmore.life.efficiency.client.domain.ListItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +17,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -46,7 +47,6 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         this.client = client;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private URL getAbsoluteEndpoint(String... pathComponents) throws
             URISyntaxException,
             MalformedURLException {
@@ -59,9 +59,8 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
                 .toURL();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<String> getListItems() throws LifeEfficiencyException {
+    public List<ListItem> getListItems() throws LifeEfficiencyException {
         Log.i(TAG, "Getting list items!");
 
         Request request;
@@ -79,13 +78,12 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
                     response.code(),
                     resBody));
             JSONObject jsonObject = new JSONObject(resBody);
-            return jsonArrayToList(jsonObject.getJSONArray("items"));
+            return jsonArrayToListOfItems(jsonObject.getJSONArray("items"));
         } catch (IOException | JSONException e) {
             throw new LifeEfficiencyException("Problem during HTTP call!", e);
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public List<String> getTodayItems() throws LifeEfficiencyException {
         Log.i(TAG, "Getting today's items!");
@@ -111,15 +109,33 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         }
     }
 
+    private static List<ListItem> jsonArrayToListOfItems(JSONArray jsonArray) {
+        return IntStream.range(0, jsonArray.length())
+                .mapToObj(i -> {
+                    try {
+                        return jsonArray.getJSONObject(i);
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .map(item -> {
+                    try {
+                        return new ListItem(item.getString("name"), item.getInt("quantity"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
+
     private static List<String> jsonArrayToList(JSONArray jsonArray) throws JSONException {
         ArrayList<String> stringArrayList = new ArrayList<>();
-        for (int i=0; i < jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             stringArrayList.add(jsonArray.getString(i));
         }
         return stringArrayList;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void acceptTodayItems() throws LifeEfficiencyException {
         Log.i(TAG, "Accepting today's items!");
@@ -146,7 +162,6 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void addPurchase(String name, int quantity) throws LifeEfficiencyException {
         Log.i(TAG, String.format("Adding a purchase with name [ %s ] and quantity [ %d ]",
@@ -179,7 +194,6 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void addToList(String name, int quantity) throws LifeEfficiencyException {
         Log.i(TAG, String.format("Adding item to list with name [ %s ] and quantity [ %d ]",
@@ -212,7 +226,6 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void completeItems(List<String> items) throws LifeEfficiencyException {
         Log.i(TAG, String.format("Completing items [ %s ]", String.join(",", items)));
@@ -245,7 +258,6 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public List<String> getRepeatingItems() throws LifeEfficiencyException {
         Log.i(TAG, "Getting repeated items!");
@@ -271,7 +283,6 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void addRepeatingItem(String item) throws LifeEfficiencyException {
         Log.i(TAG, String.format("Adding repeating items [ %s ]", item));

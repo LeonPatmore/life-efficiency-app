@@ -8,7 +8,7 @@ import com.leon.patmore.life.efficiency.tasks.AddItemTask;
 
 public class AddToListViewManager {
 
-    private static int DEFAULT_QUANTITY = 1;
+    private static final int DEFAULT_QUANTITY = 1;
 
     private final EditText purchaseName;
     private final EditText quantity;
@@ -22,17 +22,14 @@ public class AddToListViewManager {
     }
 
     private void initView() {
-        this.send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddItemTask addItemTask = new AddItemTask();
-                addItemTask.execute(new AddItemTask.AddItemTaskDomain(
-                        purchaseName.getText().toString(),
-                        Integer.parseInt(quantity.getText().toString())));
+        this.send.setOnClickListener(v -> {
+            AddItemTask addItemTask = new AddItemTask();
+            addItemTask.execute(new AddItemTask.AddItemTaskDomain(
+                    purchaseName.getText().toString(),
+                    Integer.parseInt(quantity.getText().toString())));
 
-                purchaseName.setText("");
-                quantity.setText(String.valueOf(DEFAULT_QUANTITY));
-            }
+            purchaseName.setText("");
+            quantity.setText(String.valueOf(DEFAULT_QUANTITY));
         });
     }
 

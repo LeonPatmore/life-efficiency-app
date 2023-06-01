@@ -1,18 +1,18 @@
 package com.leon.patmore.life.efficiency;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
 import com.leon.patmore.life.efficiency.views.ActiveView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
 
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private TodayItemsViewManager todayItemsViewManager;
     private ItemListViewManager itemListViewManager;
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             public void onActive() {
                 try {
                     itemListViewManager.refreshList();
-                } catch (ExecutionException | InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -112,9 +111,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             itemListViewManager = new ItemListViewManager(
                     (ListView) findViewById(R.id.ItemList),
-                    getApplicationContext());
-        } catch (ExecutionException | InterruptedException e) {
-            System.err.println("Could not create item list view manager!");
+                    getApplicationContext(),
+                    LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance());
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
