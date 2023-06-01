@@ -1,4 +1,4 @@
-package com.example.life.efficiency.client;
+package com.leon.patmore.life.efficiency.client;
 
 import android.annotation.SuppressLint;
 import android.os.Build;

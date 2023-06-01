@@ -1,11 +1,11 @@
-package com.example.life.efficiency;
+package com.leon.patmore.life.efficiency;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.example.life.efficiency.tasks.GetListItemsTask;
+import com.leon.patmore.life.efficiency.tasks.GetListItemsTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ public class ItemListViewManager {
         List<String> todayItems = new ArrayList<>(Arrays.asList(getListItemsTask.execute().get()));
         ListAdapter listAdapter = new ArrayAdapter<>(context,
                 R.layout.list_item,
-                R.id.textview,
+                R.id.textField,
                 todayItems.toArray(new String[]{}));
 
         listView.setAdapter(listAdapter);

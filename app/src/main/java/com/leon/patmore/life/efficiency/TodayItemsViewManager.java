@@ -1,21 +1,16 @@
-package com.example.life.efficiency;
+package com.leon.patmore.life.efficiency;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.os.Build;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import androidx.annotation.RequiresApi;
-
-import com.example.life.efficiency.tasks.AcceptTodayItemsTask;
-import com.example.life.efficiency.tasks.CompleteItemsTask;
-import com.example.life.efficiency.tasks.GetTodayItemsTask;
+import com.leon.patmore.life.efficiency.tasks.AcceptTodayItemsTask;
+import com.leon.patmore.life.efficiency.tasks.CompleteItemsTask;
+import com.leon.patmore.life.efficiency.tasks.GetTodayItemsTask;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +46,7 @@ public class TodayItemsViewManager {
         List<String> todayItems = new ArrayList<>(Arrays.asList(getTodayItemsTask.execute().get()));
         ListAdapter listAdapter = new ArrayAdapter<>(context,
                 R.layout.list_item,
-                R.id.textview,
+                R.id.textField,
                 todayItems.toArray(new String[]{}));
 
         itemStateManager.clear();
@@ -60,29 +55,18 @@ public class TodayItemsViewManager {
         }
 
         listView.setAdapter(listAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "Flipping " + listView.getItemAtPosition(position));
-                boolean active = itemStateManager.flipItem((String) listView.getItemAtPosition(position));
-                int colour = active ? ACTIVE_COLOUR : INACTIVE_COLOUR;
-                view.setBackgroundColor(colour);
-            }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            Log.i(TAG, "Flipping " + listView.getItemAtPosition(position));
+            boolean active = itemStateManager.flipItem((String) listView.getItemAtPosition(position));
+            int colour = active ? ACTIVE_COLOUR : INACTIVE_COLOUR;
+            view.setBackgroundColor(colour);
         });
     }
 
     private void setupConfirmButton() {
-        this.confirmButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.R)
-            @Override
-            public void onClick(View v) {
-                confirm();
-            }
-        });
+        this.confirmButton.setOnClickListener(v -> confirm());
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     private void confirm() {
         if (itemStateManager.allActive()) {
             Log.i(TAG, "Accepting all of today's items!");
@@ -90,7 +74,8 @@ public class TodayItemsViewManager {
         } else {
             Log.i(TAG,"Accepting a subset of today's items!");
             CompleteItemsTask completeItemsTask = new CompleteItemsTask();
-            completeItemsTask.execute(itemStateManager.getActiveItems());
+            List<String> activeItems = itemStateManager.getActiveItems();
+            completeItemsTask.execute(activeItems);
         }
         try {
             refreshList();

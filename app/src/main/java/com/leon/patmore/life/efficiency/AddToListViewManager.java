@@ -1,12 +1,12 @@
-package com.example.life.efficiency;
+package com.leon.patmore.life.efficiency;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.life.efficiency.tasks.SendPurchaseTask;
+import com.leon.patmore.life.efficiency.tasks.AddItemTask;
 
-public class AddPurchaseViewManager {
+public class AddToListViewManager {
 
     private static int DEFAULT_QUANTITY = 1;
 
@@ -14,9 +14,7 @@ public class AddPurchaseViewManager {
     private final EditText quantity;
     private final Button send;
 
-    public AddPurchaseViewManager(EditText purchaseName,
-                                  EditText quantity,
-                                  Button send) {
+    public AddToListViewManager(EditText purchaseName, EditText quantity, Button send) {
         this.purchaseName = purchaseName;
         this.quantity = quantity;
         this.send = send;
@@ -27,8 +25,8 @@ public class AddPurchaseViewManager {
         this.send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendPurchaseTask sendPurchaseTask = new SendPurchaseTask();
-                sendPurchaseTask.execute(new SendPurchaseTask.SendPurchaseTaskDomain(
+                AddItemTask addItemTask = new AddItemTask();
+                addItemTask.execute(new AddItemTask.AddItemTaskDomain(
                         purchaseName.getText().toString(),
                         Integer.parseInt(quantity.getText().toString())));
 

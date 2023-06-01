@@ -1,4 +1,4 @@
-package com.example.life.efficiency.client;
+package com.leon.patmore.life.efficiency.client;
 
 import java.net.MalformedURLException;
 import java.net.URL;

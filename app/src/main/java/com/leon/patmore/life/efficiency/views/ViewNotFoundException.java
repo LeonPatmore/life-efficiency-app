@@ -1,4 +1,4 @@
-package com.example.life.efficiency.views;
+package com.leon.patmore.life.efficiency.views;
 
 public class ViewNotFoundException extends Exception {
 

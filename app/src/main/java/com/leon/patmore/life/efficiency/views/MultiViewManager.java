@@ -1,4 +1,4 @@
-package com.example.life.efficiency.views;
+package com.leon.patmore.life.efficiency.views;
 
 import android.view.View;
 

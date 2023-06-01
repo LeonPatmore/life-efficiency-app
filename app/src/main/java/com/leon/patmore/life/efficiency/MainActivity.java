@@ -1,4 +1,4 @@
-package com.example.life.efficiency;
+package com.leon.patmore.life.efficiency;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,8 +10,8 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.life.efficiency.views.ActiveView;
-import com.example.life.efficiency.views.MultiViewManager;
+import com.leon.patmore.life.efficiency.views.ActiveView;
+import com.leon.patmore.life.efficiency.views.MultiViewManager;
 
 import java.util.HashMap;
 import java.util.Map;

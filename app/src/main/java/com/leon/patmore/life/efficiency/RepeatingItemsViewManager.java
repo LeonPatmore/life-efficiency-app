@@ -1,11 +1,11 @@
-package com.example.life.efficiency;
+package com.leon.patmore.life.efficiency;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.example.life.efficiency.tasks.GetRepeatingItemsTask;
+import com.leon.patmore.life.efficiency.tasks.GetRepeatingItemsTask;
 
 import java.util.concurrent.ExecutionException;
 
@@ -27,7 +27,7 @@ public class RepeatingItemsViewManager {
 
         ListAdapter listAdapter = new ArrayAdapter<>(context,
                 R.layout.list_item,
-                R.id.textview,
+                R.id.textField,
                 repeatedItems);
         listView.setAdapter(listAdapter);
     }

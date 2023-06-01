@@ -1,4 +1,4 @@
-package com.example.life.efficiency.tasks;
+package com.leon.patmore.life.efficiency.tasks;
 
 import android.os.AsyncTask;
 import android.os.Build;
@@ -6,8 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.life.efficiency.client.LifeEfficiencyClientConfiguration;
-import com.example.life.efficiency.client.LifeEfficiencyException;
+import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
+import com.leon.patmore.life.efficiency.client.LifeEfficiencyException;
 
 import java.net.MalformedURLException;
 

@@ -1,8 +1,4 @@
-package com.example.life.efficiency;
-
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
+package com.leon.patmore.life.efficiency;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +9,7 @@ import java.util.function.Predicate;
 
 public class ItemStateManager {
 
-    private Map<String, Boolean> itemStates = new HashMap<>();
+    private final Map<String, Boolean> itemStates = new HashMap<>();
 
     public void clear() {
         itemStates.clear();
@@ -29,13 +25,11 @@ public class ItemStateManager {
         return true;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean flipItem(String item) {
         itemStates.put(item, !itemActive(item));
         return Optional.ofNullable(itemStates.get(item)).orElse(Boolean.TRUE);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean allActive() {
         return itemStates.values().stream().allMatch(new Predicate<Boolean>() {
             @Override
@@ -45,7 +39,6 @@ public class ItemStateManager {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     public List<String> getActiveItems() {
         List<String> activeList = new ArrayList<>();
         for(String item : itemStates.keySet()) {
