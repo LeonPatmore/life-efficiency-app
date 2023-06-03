@@ -22,4 +22,8 @@ public interface LifeEfficiencyClient {
 
     void addRepeatingItem(String item) throws LifeEfficiencyException;
 
+    void deleteListItem(String name, int quantity) throws LifeEfficiencyException;
+
+    void completeItem(String name, int quantity) throws LifeEfficiencyException;
+
 }

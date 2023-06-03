@@ -20,6 +20,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -307,6 +308,70 @@ public class LifeEfficiencyClientHttp implements LifeEfficiencyClient {
 
             if (response.code() != 200)
                 throw new LifeEfficiencyException("Unexpected response code from endpoint!");
+        } catch (IOException e) {
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
+        }
+    }
+
+    @Override
+    public void deleteListItem(String name, int quantity) throws LifeEfficiencyException {
+        Log.i(TAG, String.format("Deleting list item [ %s ] with quantity [ %s ]", name, quantity));
+
+        Request request;
+        HttpUrl httpUrl = HttpUrl
+                .get(endpoint)
+                .newBuilder()
+                .addPathSegment(SHOPPING_PATH)
+                .addPathSegment(SHOPPING_LIST_PATH)
+                .addQueryParameter("name", name)
+                .addQueryParameter("quantity", String.valueOf(quantity))
+                .build();
+        Log.i(TAG, String.format("Delete list item [ %s ]", httpUrl.url()));
+        request = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+
+            if (response.code() != 200)
+                throw new LifeEfficiencyException(String.format("Unexpected response code %s from endpoint!", response.code()));
+        } catch (IOException e) {
+            throw new LifeEfficiencyException("Problem during HTTP call!", e);
+        }
+    }
+
+    @Override
+    public void completeItem(String name, int quantity) throws LifeEfficiencyException {
+        Log.i(TAG, String.format("Completing item [ %s ] with quantity [ %s ]", name, quantity));
+
+        Request request;
+        HttpUrl httpUrl = HttpUrl
+                .get(endpoint)
+                .newBuilder()
+                .addPathSegment(SHOPPING_PATH)
+                .addPathSegment(SHOPPING_TODAY_PATH)
+                .addQueryParameter("name", name)
+                .addQueryParameter("quantity", String.valueOf(quantity))
+                .build();
+        Log.i(TAG, String.format("Complete item [ %s ]", httpUrl.url()));
+        request = new Request.Builder()
+                .url(httpUrl)
+                .method("DELETE", null)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            String resBody = Objects.requireNonNull(response.body()).string();
+            Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                    response.code(),
+                    resBody));
+
+            if (response.code() != 200)
+                throw new LifeEfficiencyException(String.format("Unexpected response code %s from endpoint!", response.code()));
         } catch (IOException e) {
             throw new LifeEfficiencyException("Problem during HTTP call!", e);
         }
