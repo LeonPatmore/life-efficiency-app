@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.leon.patmore.life.efficiency.R
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
+import com.leon.patmore.life.efficiency.resetText
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
@@ -27,8 +28,6 @@ class AddPurchaseView(view: View,
             purchaseQuantity.setText(DEFAULT_QUANTITY.toString())
         }
     }
-
-    private fun EditText.resetText() = this.setText("")
 
     companion object {
         private const val DEFAULT_QUANTITY = 1

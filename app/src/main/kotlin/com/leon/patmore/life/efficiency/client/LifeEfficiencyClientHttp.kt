@@ -232,17 +232,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         } catch (e: MalformedURLException) {
             throw LifeEfficiencyException("Problem constructing HTTP request!", e)
         }
-        try {
-            client.newCall(request).execute().use { response ->
-                val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
-                        response.code,
-                        resBody))
-                if (response.code != 200) throw LifeEfficiencyException("Unexpected response code from endpoint!")
-            }
-        } catch (e: IOException) {
-            throw LifeEfficiencyException("Problem during HTTP call!", e)
-        }
+        client.newCall(request).execute().use { validateResponse(it) }
     }
 
     override fun deleteListItem(name: String, quantity: Int) {

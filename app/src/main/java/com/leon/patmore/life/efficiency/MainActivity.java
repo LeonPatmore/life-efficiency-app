@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
 import com.leon.patmore.life.efficiency.views.ActiveView;
 import com.leon.patmore.life.efficiency.views.AddPurchaseView;
+import com.leon.patmore.life.efficiency.views.AddRepeatingItemView;
+import com.leon.patmore.life.efficiency.views.AddToListView;
 import com.leon.patmore.life.efficiency.views.HistoryView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
 
@@ -43,9 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewManager() {
         LinearLayout itemListLayout = findViewById(R.id.ItemListLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
-        LinearLayout addToListLayout = findViewById(R.id.AddToListLayout);
         LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
-        LinearLayout addRepeatingItemLayout = findViewById(R.id.AddRepeatingItemLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
         viewManagerMap.put(ITEM_LIST_VIEW_NAME, new ActiveView(itemListLayout, (Button) findViewById(R.id.itemListButton)) {
             @Override
@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        viewManagerMap.put(ADD_TO_LIST_VIEW_NAME, new ActiveView(addToListLayout, (Button) findViewById(R.id.AddItemToListButton)));
         viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new ActiveView(repeatingItemsLayout, (Button) findViewById(R.id.RepeatingItemsButton)) {
             @Override
             public void onActive() {
@@ -78,13 +77,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        viewManagerMap.put(ADD_REPEATING_ITEMS_VIEW_NAME, new ActiveView(addRepeatingItemLayout, (Button) findViewById(R.id.AddRepeatingItemViewButton)));
         viewManagerMap.put(HISTORY_VIEW_NAME, new HistoryView(findViewById(R.id.HistoryLayout),
                 findViewById(R.id.historyViewButton),
                 LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance(),
                 getApplicationContext()));
         viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new AddPurchaseView(findViewById(R.id.AddPurchaseLayout),
                 findViewById(R.id.AddPurchaseButton),
+                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
+        viewManagerMap.put(ADD_TO_LIST_VIEW_NAME, new AddToListView(findViewById(R.id.AddToListLayout),
+                findViewById(R.id.AddItemToListButton),
+                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
+        viewManagerMap.put(ADD_REPEATING_ITEMS_VIEW_NAME, new AddRepeatingItemView(findViewById(R.id.AddRepeatingItemLayout),
+                findViewById(R.id.AddRepeatingItemViewButton),
                 LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
         new MultiViewManager(viewManagerMap);
     }

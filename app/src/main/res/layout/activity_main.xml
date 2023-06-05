@@ -219,6 +219,7 @@
 
             <ListView
                 android:id="@+id/RepeatingItemsList"
+                android:listSelector="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
