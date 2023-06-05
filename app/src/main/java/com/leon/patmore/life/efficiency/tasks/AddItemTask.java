@@ -1,19 +1,10 @@
 package com.leon.patmore.life.efficiency.tasks;
 
 import android.os.AsyncTask;
-import android.os.Build;
-import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
-import com.leon.patmore.life.efficiency.client.LifeEfficiencyException;
-
-import java.net.MalformedURLException;
 
 public class AddItemTask extends AsyncTask<AddItemTask.AddItemTaskDomain, Void, Void> {
-
-    private final String TAG = getClass().getName();
 
     public static class AddItemTaskDomain {
 
@@ -35,20 +26,12 @@ public class AddItemTask extends AsyncTask<AddItemTask.AddItemTaskDomain, Void, 
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected Void doInBackground(AddItemTaskDomain... domains) {
         for (AddItemTaskDomain addItemTaskDomain : domains) {
-            try {
-                LifeEfficiencyClientConfiguration
-                        .getLifeEfficiencyClientInstance()
-                        .addToList(addItemTaskDomain.getName(), addItemTaskDomain.getQuantity());
-            } catch (MalformedURLException e) {
-                Log.e(TAG, "Can not create life efficiency client!", e);
-                throw new RuntimeException(e);
-            } catch (LifeEfficiencyException e) {
-                Log.w(TAG, "There was an issue adding the item to the shopping list!", e);
-            }
+            LifeEfficiencyClientConfiguration
+                    .getLifeEfficiencyClientInstance()
+                    .addToList(addItemTaskDomain.getName(), addItemTaskDomain.getQuantity());
         }
         return null;
     }

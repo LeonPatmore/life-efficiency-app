@@ -14,4 +14,7 @@
     <string name="add_repeating_item_item_default_text">repeating item</string>
     <string name="add_repeating_item_button_text">Add</string>
     <string name="add_repeating_item_view_button_text">Add Repeating Item</string>
+    <string name="completeButtonText">Complete</string>
+    <string name="deleteButtonText">Delete</string>
+    <string name="historyButtonText">History</string>
 </resources>

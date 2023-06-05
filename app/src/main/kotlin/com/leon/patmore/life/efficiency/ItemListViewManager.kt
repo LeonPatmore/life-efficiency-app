@@ -24,7 +24,7 @@ class ItemListViewManager(private val listView: ListView,
     fun refreshList() {
         val listItems = runBlocking {
             withContext(Dispatchers.Default) {
-                lifeEfficiencyClient.listItems
+                lifeEfficiencyClient.getListItems()
             }
         }
 

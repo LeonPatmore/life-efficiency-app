@@ -37,7 +37,6 @@ public class TodayItemsViewManager {
         this.listView = listView;
         this.context = context;
         this.confirmButton = confirmButton;
-        refreshList();
         setupConfirmButton();
     }
 

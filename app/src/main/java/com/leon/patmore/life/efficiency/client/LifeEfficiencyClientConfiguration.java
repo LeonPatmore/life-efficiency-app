@@ -20,11 +20,14 @@ public class LifeEfficiencyClientConfiguration {
         return OK_HTTP_CLIENT_INSTANCE;
     }
 
-    public static LifeEfficiencyClient getLifeEfficiencyClientInstance()
-            throws MalformedURLException {
+    public static LifeEfficiencyClient getLifeEfficiencyClientInstance() {
         if (LIFE_EFFICIENCY_CLIENT_INSTANCE == null) {
-            LIFE_EFFICIENCY_CLIENT_INSTANCE = new LifeEfficiencyClientHttp(new URL(HTTP_ENDPOINT),
-                    getOkHttpClientInstance());
+            try {
+                LIFE_EFFICIENCY_CLIENT_INSTANCE = new LifeEfficiencyClientHttp(new URL(HTTP_ENDPOINT),
+                        getOkHttpClientInstance());
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
         }
         return LIFE_EFFICIENCY_CLIENT_INSTANCE;
     }

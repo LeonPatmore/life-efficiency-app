@@ -18,7 +18,6 @@ public class RepeatingItemsViewManager {
             throws ExecutionException, InterruptedException {
         this.listView = listView;
         this.context = context;
-        setupList();
     }
 
     public void setupList() throws ExecutionException, InterruptedException {
@@ -26,7 +25,7 @@ public class RepeatingItemsViewManager {
         String[] repeatedItems = getRepeatingItemsTask.execute().get();
 
         ListAdapter listAdapter = new ArrayAdapter<>(context,
-                R.layout.list_item,
+                R.layout.simple_list_item,
                 R.id.textField,
                 repeatedItems);
         listView.setAdapter(listAdapter);

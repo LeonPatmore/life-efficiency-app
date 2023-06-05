@@ -2,7 +2,6 @@ package com.leon.patmore.life.efficiency;
 
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -10,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
 import com.leon.patmore.life.efficiency.views.ActiveView;
+import com.leon.patmore.life.efficiency.views.AddPurchaseView;
+import com.leon.patmore.life.efficiency.views.HistoryView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
 
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String ADD_TO_LIST_VIEW_NAME = "add_to_list";
     private static final String REPEATING_ITEMS_VIEW_NAME = "repeating_items";
     private static final String ADD_REPEATING_ITEMS_VIEW_NAME = "add_repeating_items";
+    private static final String HISTORY_VIEW_NAME = "history";
 
     private RepeatingItemsViewManager repeatingItemsViewManager;
     private TodayItemsViewManager todayItemsViewManager;
@@ -40,14 +41,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewManager() {
-        LinearLayout addPurchaseLayout = findViewById(R.id.AddPurchaseLayout);
         LinearLayout itemListLayout = findViewById(R.id.ItemListLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout addToListLayout = findViewById(R.id.AddToListLayout);
         LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
         LinearLayout addRepeatingItemLayout = findViewById(R.id.AddRepeatingItemLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
-        viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new ActiveView(addPurchaseLayout, (Button) findViewById(R.id.AddPurchaseButton)));
         viewManagerMap.put(ITEM_LIST_VIEW_NAME, new ActiveView(itemListLayout, (Button) findViewById(R.id.itemListButton)) {
             @Override
             public void onActive() {
@@ -80,16 +79,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         viewManagerMap.put(ADD_REPEATING_ITEMS_VIEW_NAME, new ActiveView(addRepeatingItemLayout, (Button) findViewById(R.id.AddRepeatingItemViewButton)));
+        viewManagerMap.put(HISTORY_VIEW_NAME, new HistoryView(findViewById(R.id.HistoryLayout),
+                findViewById(R.id.historyViewButton),
+                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance(),
+                getApplicationContext()));
+        viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new AddPurchaseView(findViewById(R.id.AddPurchaseLayout),
+                findViewById(R.id.AddPurchaseButton),
+                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
         new MultiViewManager(viewManagerMap);
     }
 
     private void setupViews() {
-        new AddPurchaseViewManager((EditText) findViewById(R.id.PurchaseName),
-                (EditText) findViewById(R.id.PurchaseQuantity),
-                (Button) findViewById(R.id.AddPurchaseSendButton));
-        new AddToListViewManager((EditText) findViewById(R.id.AddToListPurchaseName),
-                (EditText) findViewById(R.id.AddToListPurchaseQuantity),
-                (Button) findViewById(R.id.AddToListSendButton));
         try {
             repeatingItemsViewManager =  new RepeatingItemsViewManager(
                     (ListView) findViewById(R.id.RepeatingItemsList),
@@ -108,14 +108,10 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        try {
-            itemListViewManager = new ItemListViewManager(
-                    (ListView) findViewById(R.id.ItemList),
-                    getApplicationContext(),
-                    LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance());
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        itemListViewManager = new ItemListViewManager(
+                (ListView) findViewById(R.id.ItemList),
+                getApplicationContext(),
+                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance());
     }
 
 }
