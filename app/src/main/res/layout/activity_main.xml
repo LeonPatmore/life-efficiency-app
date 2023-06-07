@@ -87,6 +87,7 @@
 
             <ListView
                 android:id="@+id/HistoryList"
+                android:listSelector="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
@@ -101,7 +102,7 @@
             android:orientation="vertical"
             android:visibility="invisible">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/AddToListPurchaseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,7 +135,7 @@
             android:orientation="vertical"
             android:visibility="invisible">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/PurchaseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -194,7 +195,7 @@
             android:orientation="vertical"
             android:visibility="invisible">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/AddRepeatingItemItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

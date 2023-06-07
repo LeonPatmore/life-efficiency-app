@@ -44,7 +44,7 @@ public class TodayItemsViewManager {
         GetTodayItemsTask getTodayItemsTask = new GetTodayItemsTask();
         List<String> todayItems = new ArrayList<>(Arrays.asList(getTodayItemsTask.execute().get()));
         ListAdapter listAdapter = new ArrayAdapter<>(context,
-                R.layout.list_item,
+                R.layout.simple_list_item,
                 R.id.textField,
                 todayItems.toArray(new String[]{}));
 

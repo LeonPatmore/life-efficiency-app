@@ -7,6 +7,7 @@ import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient;
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
 import com.leon.patmore.life.efficiency.views.ActiveView;
 import com.leon.patmore.life.efficiency.views.AddPurchaseView;
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupViewManager() {
+        LifeEfficiencyClient lifeEfficiencyClient = LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance();
+        AutoCompleteService autoCompleteService = new AutoCompleteService(lifeEfficiencyClient);
         LinearLayout itemListLayout = findViewById(R.id.ItemListLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
@@ -79,17 +82,20 @@ public class MainActivity extends AppCompatActivity {
         });
         viewManagerMap.put(HISTORY_VIEW_NAME, new HistoryView(findViewById(R.id.HistoryLayout),
                 findViewById(R.id.historyViewButton),
-                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance(),
+                lifeEfficiencyClient,
                 getApplicationContext()));
         viewManagerMap.put(ADD_PURCHASE_VIEW_NAME, new AddPurchaseView(findViewById(R.id.AddPurchaseLayout),
                 findViewById(R.id.AddPurchaseButton),
-                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
+                lifeEfficiencyClient,
+                autoCompleteService));
         viewManagerMap.put(ADD_TO_LIST_VIEW_NAME, new AddToListView(findViewById(R.id.AddToListLayout),
                 findViewById(R.id.AddItemToListButton),
-                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
+                lifeEfficiencyClient,
+                autoCompleteService));
         viewManagerMap.put(ADD_REPEATING_ITEMS_VIEW_NAME, new AddRepeatingItemView(findViewById(R.id.AddRepeatingItemLayout),
                 findViewById(R.id.AddRepeatingItemViewButton),
-                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()));
+                lifeEfficiencyClient,
+                autoCompleteService));
         new MultiViewManager(viewManagerMap);
     }
 

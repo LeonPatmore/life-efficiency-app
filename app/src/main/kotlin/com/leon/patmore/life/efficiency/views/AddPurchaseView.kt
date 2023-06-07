@@ -1,8 +1,11 @@
 package com.leon.patmore.life.efficiency.views
 
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
+import com.leon.patmore.life.efficiency.AutoCompleteService
 import com.leon.patmore.life.efficiency.R
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
 import com.leon.patmore.life.efficiency.resetText
@@ -12,9 +15,10 @@ import kotlinx.coroutines.withContext
 
 class AddPurchaseView(view: View,
                       button: Button,
-                      private val lifeEfficiencyClient: LifeEfficiencyClient) : ActiveView(view, button) {
+                      private val lifeEfficiencyClient: LifeEfficiencyClient,
+                      autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
 
-    private val purchaseName: EditText = view.findViewById(R.id.PurchaseName)
+    private val purchaseName: AutoCompleteTextView = view.findViewById(R.id.PurchaseName)
     private val purchaseQuantity: EditText = view.findViewById(R.id.PurchaseQuantity)
     private val sendButton: Button = view.findViewById(R.id.AddPurchaseSendButton)
 
@@ -27,6 +31,9 @@ class AddPurchaseView(view: View,
             purchaseName.resetText()
             purchaseQuantity.setText(DEFAULT_QUANTITY.toString())
         }
+        purchaseName.setAdapter(ArrayAdapter(view.context,
+                android.R.layout.select_dialog_item,
+                autoCompleteService.getExistingItems()))
     }
 
     companion object {
