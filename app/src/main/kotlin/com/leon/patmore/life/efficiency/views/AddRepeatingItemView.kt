@@ -15,7 +15,7 @@ import kotlinx.coroutines.withContext
 class AddRepeatingItemView(view: View,
                            button: Button,
                            private val lifeEfficiencyClient: LifeEfficiencyClient,
-                           autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
+                           private val autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
 
     private val repeatingItemName: AutoCompleteTextView = view.findViewById(R.id.AddRepeatingItemItem)
     private val sendButton: Button = view.findViewById(R.id.AddRepatingItemButton)
@@ -27,6 +27,9 @@ class AddRepeatingItemView(view: View,
             } }
             repeatingItemName.resetText()
         }
+    }
+
+    override fun onActive() {
         repeatingItemName.setAdapter(ArrayAdapter(view.context,
                 android.R.layout.select_dialog_item,
                 autoCompleteService.getExistingItems()))

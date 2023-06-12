@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 class AddToListView(view: View,
                     button: Button,
                     private val lifeEfficiencyClient: LifeEfficiencyClient,
-                    autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
+                    private val autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
 
     private val listItemName: AutoCompleteTextView = view.findViewById(R.id.AddToListPurchaseName)
     private val listItemQuantity: EditText = view.findViewById(R.id.AddToListPurchaseQuantity)
@@ -31,6 +31,9 @@ class AddToListView(view: View,
             listItemName.resetText()
             listItemQuantity.setText(DEFAULT_QUANTITY.toString())
         }
+    }
+
+    override fun onActive() {
         listItemName.setAdapter(ArrayAdapter(view.context,
                 android.R.layout.select_dialog_item,
                 autoCompleteService.getExistingItems()))

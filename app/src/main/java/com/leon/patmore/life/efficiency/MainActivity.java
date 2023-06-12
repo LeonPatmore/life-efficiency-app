@@ -14,6 +14,7 @@ import com.leon.patmore.life.efficiency.views.AddPurchaseView;
 import com.leon.patmore.life.efficiency.views.AddRepeatingItemView;
 import com.leon.patmore.life.efficiency.views.AddToListView;
 import com.leon.patmore.life.efficiency.views.HistoryView;
+import com.leon.patmore.life.efficiency.views.ItemListView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
 
 import java.util.HashMap;
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RepeatingItemsViewManager repeatingItemsViewManager;
     private TodayItemsViewManager todayItemsViewManager;
-    private ItemListViewManager itemListViewManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +46,14 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewManager() {
         LifeEfficiencyClient lifeEfficiencyClient = LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance();
         AutoCompleteService autoCompleteService = new AutoCompleteService(lifeEfficiencyClient);
-        LinearLayout itemListLayout = findViewById(R.id.ItemListLayout);
         LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         LinearLayout repeatingItemsLayout = findViewById(R.id.RepeatingItemsLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
-        viewManagerMap.put(ITEM_LIST_VIEW_NAME, new ActiveView(itemListLayout, (Button) findViewById(R.id.itemListButton)) {
-            @Override
-            public void onActive() {
-                try {
-                    itemListViewManager.refreshList();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        viewManagerMap.put(ITEM_LIST_VIEW_NAME, new ItemListView(findViewById(R.id.ItemListLayout),
+                findViewById(R.id.itemListButton),
+                findViewById(R.id.ItemList),
+                getApplicationContext(),
+                lifeEfficiencyClient));
         viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, (Button) findViewById(R.id.TodaysItemsButton)) {
             @Override
             public void onActive() {
@@ -117,11 +111,6 @@ public class MainActivity extends AppCompatActivity {
             System.err.println("Could not create today's item view manager!");
             e.printStackTrace();
         }
-
-        itemListViewManager = new ItemListViewManager(
-                (ListView) findViewById(R.id.ItemList),
-                getApplicationContext(),
-                LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance());
     }
 
 }

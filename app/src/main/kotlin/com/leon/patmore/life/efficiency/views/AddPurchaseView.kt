@@ -16,7 +16,7 @@ import kotlinx.coroutines.withContext
 class AddPurchaseView(view: View,
                       button: Button,
                       private val lifeEfficiencyClient: LifeEfficiencyClient,
-                      autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
+                      private val autoCompleteService: AutoCompleteService) : ActiveView(view, button) {
 
     private val purchaseName: AutoCompleteTextView = view.findViewById(R.id.PurchaseName)
     private val purchaseQuantity: EditText = view.findViewById(R.id.PurchaseQuantity)
@@ -31,6 +31,9 @@ class AddPurchaseView(view: View,
             purchaseName.resetText()
             purchaseQuantity.setText(DEFAULT_QUANTITY.toString())
         }
+    }
+
+    override fun onActive() {
         purchaseName.setAdapter(ArrayAdapter(view.context,
                 android.R.layout.select_dialog_item,
                 autoCompleteService.getExistingItems()))
