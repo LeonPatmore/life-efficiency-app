@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.util.Log
 import com.leon.patmore.life.efficiency.client.domain.LifeEfficiencyException
 import com.leon.patmore.life.efficiency.client.domain.ListItem
+import com.leon.patmore.life.efficiency.client.domain.TodoItem
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -306,6 +307,33 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                 }
     }
 
+    override fun todoList(): List<TodoItem> {
+        val httpUrl = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment("non_completed")
+                .build()
+        return client.newCall(Request.Builder().url(httpUrl).get().build())
+                .execute()
+                .use { jsonArrayToTodoItemList(JSONArray(it.body!!.string())) }
+    }
+
+    override fun updateTodoItemStatus(id: Int, status: String) {
+        Log.i(TAG, "Updating todo item id [ %d ] to status [ %s ]".format(id, status))
+
+        val httpUrl = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment("list")
+                .build()
+        val body = String.format("{\"id\": %d, \"status\": \"%s\"}", id, status)
+        val res = client.newCall(Request.Builder()
+                .patch(body.toRequestBody(JSON_MEDIA_TYPE))
+                .url(httpUrl).build())
+                .execute()
+        validateResponse(res)
+    }
+
     private fun validateResponse(res: Response) {
         val body = res.body?.string()
         Log.d(TAG, "Response code [ ${res.code} ] with body [ $body ]")
@@ -323,7 +351,9 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         private const val SHOPPING_LIST_PATH = "list"
         private const val SHOPPING_ITEMS_PATH = "items"
         private const val SHOPPING_REPEATING_PATH = "repeating"
+        private const val TODO_PATH = "todo"
         private val JSON_MEDIA_TYPE = "application/json".toMediaType()
+
         private fun jsonArrayToListOfItems(jsonArray: JSONArray): List<ListItem> {
             return IntStream.range(0, jsonArray.length())
                     .mapToObj { i: Int ->
@@ -351,6 +381,29 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
             }
             return stringArrayList
         }
+
+        private fun jsonArrayToTodoItemList(jsonArray: JSONArray): List<TodoItem> {
+            return IntStream.range(0, jsonArray.length())
+                    .mapToObj { i: Int ->
+                        try {
+                            return@mapToObj jsonArray.getJSONObject(i)
+                        } catch (e: JSONException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+                    .map { item: JSONObject ->
+                        try {
+                            return@map TodoItem(item.getInt("id"),
+                                    item.getString("desc"),
+                                    item.getString("status"),
+                                    item.getString("date_added"))
+                        } catch (e: JSONException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+                    .collect(Collectors.toList())
+        }
+
     }
 
 }

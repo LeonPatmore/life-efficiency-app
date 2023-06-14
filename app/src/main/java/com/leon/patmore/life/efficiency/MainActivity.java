@@ -16,6 +16,7 @@ import com.leon.patmore.life.efficiency.views.AddToListView;
 import com.leon.patmore.life.efficiency.views.HistoryView;
 import com.leon.patmore.life.efficiency.views.ItemListView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
+import com.leon.patmore.life.efficiency.views.TodoListView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
         viewManagerMap.put(ITEM_LIST_VIEW_NAME, new ItemListView(findViewById(R.id.ItemListLayout),
                 findViewById(R.id.itemListButton),
                 findViewById(R.id.ItemList),
+                getApplicationContext(),
+                lifeEfficiencyClient));
+        viewManagerMap.put("todoListView", new TodoListView(findViewById(R.id.TodoListLayout),
+                findViewById(R.id.TodoListButton),
+                findViewById(R.id.TodoList),
                 getApplicationContext(),
                 lifeEfficiencyClient));
         viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, (Button) findViewById(R.id.TodaysItemsButton)) {

@@ -17,4 +17,7 @@
     <string name="completeButtonText">Complete</string>
     <string name="deleteButtonText">Delete</string>
     <string name="historyButtonText">History</string>
+    <string name="InProgressButtonText">In Progress</string>
+    <string name="CompleteButtonText">Complete</string>
+    <string name="TodoListViewButtonText">TODO List</string>
 </resources>
