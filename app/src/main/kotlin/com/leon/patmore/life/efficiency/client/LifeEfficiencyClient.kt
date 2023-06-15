@@ -31,4 +31,6 @@ interface LifeEfficiencyClient {
 
     fun updateTodoItemStatus(id: Int, status: String)
 
+    fun addTodo(desc: String)
+
 }

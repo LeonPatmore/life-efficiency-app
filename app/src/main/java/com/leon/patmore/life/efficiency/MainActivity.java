@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 lifeEfficiencyClient));
         viewManagerMap.put("todoListView", new TodoListView(findViewById(R.id.TodoListLayout),
                 findViewById(R.id.TodoListButton),
+                findViewById(R.id.AddTodoButton),
+                findViewById(R.id.AddTodoText),
                 findViewById(R.id.TodoList),
                 getApplicationContext(),
                 lifeEfficiencyClient));

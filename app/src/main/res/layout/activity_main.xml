@@ -74,14 +74,40 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="invisible">
+
+            <LinearLayout
+                android:id="@+id/AddTodoLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/AddTodoText"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="3"
+                    android:inputType="text"
+                    android:importantForAutofill="no"
+                    tools:ignore="LabelFor"
+                    android:hint="@string/add_todo_text_hint" />
+
+                <Button
+                    android:id="@+id/AddTodoButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_todo_button_text" />
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/TodoList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
-                tools:visibility="visible" />
+                tools:visibility="visible" >
+
+            </ListView>
 
         </LinearLayout>
 

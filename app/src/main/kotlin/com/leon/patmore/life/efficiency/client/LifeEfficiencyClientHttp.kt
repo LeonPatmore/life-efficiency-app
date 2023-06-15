@@ -334,6 +334,22 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         validateResponse(res)
     }
 
+    override fun addTodo(desc: String) {
+        Log.i(TAG, "Adding todo with desc [ {$desc ]")
+
+        val httpUrl = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment("list")
+                .build()
+        val body = "{\"desc\": \"$desc\"}"
+        val res = client.newCall(Request.Builder()
+                .post(body.toRequestBody(JSON_MEDIA_TYPE))
+                .url(httpUrl).build())
+                .execute()
+        validateResponse(res)
+    }
+
     private fun validateResponse(res: Response) {
         val body = res.body?.string()
         Log.d(TAG, "Response code [ ${res.code} ] with body [ $body ]")

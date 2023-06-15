@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import android.widget.TextView
 import com.leon.patmore.life.efficiency.R
@@ -20,18 +21,24 @@ import java.lang.Exception
 
 class TodoListView(view: View,
                    button: Button,
+                   private val addTodoButton: Button,
+                   private val todoDescText: EditText,
                    private val listView: ListView,
                    private val context: Context,
                    private val lifeEfficiencyClient: LifeEfficiencyClient) :
         ActiveView(view, button) {
 
     override fun onActive() {
+        setupTodoList()
+        setupAddTodoButton()
+    }
+
+    private fun setupTodoList() {
         val todoList = runBlocking {
             withContext(Dispatchers.Default) {
                 lifeEfficiencyClient.todoList()
             }
         }
-
         val listAdapter = object: ArrayAdapter<TodoItem>(context, R.layout.todo_item, todoList) {
             val inflater = LayoutInflater.from(context)
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -43,17 +50,25 @@ class TodoListView(view: View,
                 val completeButton = view.findViewById<Button>(R.id.TodoItemCompleteButton)
                 completeButton.setOnClickListener {
                     runBlocking { withContext(Dispatchers.Default) { lifeEfficiencyClient.updateTodoItemStatus(todoItem.id, "done") } }
-                    onActive()
+                    setupTodoList()
                 }
                 val inProgressButton = view.findViewById<Button>(R.id.TodoItemInProgressButton)
                 inProgressButton.setOnClickListener {
                     runBlocking { withContext(Dispatchers.Default) { lifeEfficiencyClient.updateTodoItemStatus(todoItem.id, "in_progress") } }
-                    onActive()
+                    setupTodoList()
                 }
                 return view
             }
         }
         listView.adapter = listAdapter
+    }
+
+    private fun setupAddTodoButton() {
+        addTodoButton.setOnClickListener {
+            runBlocking { withContext(Dispatchers.Default) { lifeEfficiencyClient.addTodo(todoDescText.text.toString()) } }
+            setupTodoList()
+            todoDescText.setText("")
+        }
     }
 
 }

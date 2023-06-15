@@ -20,4 +20,6 @@
     <string name="InProgressButtonText">In Progress</string>
     <string name="CompleteButtonText">Complete</string>
     <string name="TodoListViewButtonText">TODO List</string>
+    <string name="add_todo_button_text">Add TODO</string>
+    <string name="add_todo_text_hint">Todo description</string>
 </resources>
