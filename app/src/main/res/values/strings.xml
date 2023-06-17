@@ -22,4 +22,5 @@
     <string name="TodoListViewButtonText">TODO List</string>
     <string name="add_todo_button_text">Add TODO</string>
     <string name="add_todo_text_hint">Todo description</string>
+    <string name="todo_history_button_text">TODO History</string>
 </resources>

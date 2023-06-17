@@ -1,9 +1,7 @@
 package com.leon.patmore.life.efficiency;
 
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +14,7 @@ import com.leon.patmore.life.efficiency.views.AddToListView;
 import com.leon.patmore.life.efficiency.views.HistoryView;
 import com.leon.patmore.life.efficiency.views.ItemListView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
+import com.leon.patmore.life.efficiency.views.TodoHistoryView;
 import com.leon.patmore.life.efficiency.views.TodoListView;
 
 import java.util.HashMap;
@@ -62,7 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.TodoList),
                 getApplicationContext(),
                 lifeEfficiencyClient));
-        viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, (Button) findViewById(R.id.TodaysItemsButton)) {
+        viewManagerMap.put("todoHistoryView", new TodoHistoryView(findViewById(R.id.TodoHistoryLayout),
+                findViewById(R.id.TodoHistoryButton),
+                findViewById(R.id.TodoHistoryList),
+                lifeEfficiencyClient,
+                getApplicationContext()));
+        viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, findViewById(R.id.TodaysItemsButton)) {
             @Override
             public void onActive() {
                 try {
@@ -72,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new ActiveView(repeatingItemsLayout, (Button) findViewById(R.id.RepeatingItemsButton)) {
+        viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new ActiveView(repeatingItemsLayout, findViewById(R.id.RepeatingItemsButton)) {
             @Override
             public void onActive() {
                 try {
@@ -104,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupViews() {
         try {
             repeatingItemsViewManager =  new RepeatingItemsViewManager(
-                    (ListView) findViewById(R.id.RepeatingItemsList),
+                    findViewById(R.id.RepeatingItemsList),
                     getApplicationContext());
         } catch (ExecutionException | InterruptedException e) {
             System.err.println("Could not create repeating items view manager!");
@@ -112,9 +116,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try {
-            todayItemsViewManager = new TodayItemsViewManager((ListView) findViewById(R.id.ShoppingItemList),
+            todayItemsViewManager = new TodayItemsViewManager(findViewById(R.id.ShoppingItemList),
                     getApplicationContext(),
-                    (Button) findViewById(R.id.ConfirmTodayButton));
+                    findViewById(R.id.ConfirmTodayButton));
         } catch (ExecutionException | InterruptedException e) {
             System.err.println("Could not create today's item view manager!");
             e.printStackTrace();

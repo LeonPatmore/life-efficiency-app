@@ -1,7 +1,6 @@
 package com.leon.patmore.life.efficiency.views
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,10 +13,8 @@ import com.leon.patmore.life.efficiency.R
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 
 class TodoListView(view: View,
                    button: Button,
@@ -36,7 +33,7 @@ class TodoListView(view: View,
     private fun setupTodoList() {
         val todoList = runBlocking {
             withContext(Dispatchers.Default) {
-                lifeEfficiencyClient.todoList()
+                lifeEfficiencyClient.todoNonCompleted()
             }
         }
         val listAdapter = object: ArrayAdapter<TodoItem>(context, R.layout.todo_item, todoList) {

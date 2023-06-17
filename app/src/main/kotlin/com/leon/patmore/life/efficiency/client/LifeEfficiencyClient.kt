@@ -27,7 +27,9 @@ interface LifeEfficiencyClient {
 
     fun getHistory() : List<ListItem>
 
-    fun todoList() : List<TodoItem>
+    fun todoNonCompleted() : List<TodoItem>
+
+    fun todoList(status: String? = null, sorted: Boolean = false) : List<TodoItem>
 
     fun updateTodoItemStatus(id: Int, status: String)
 

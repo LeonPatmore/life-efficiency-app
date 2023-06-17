@@ -69,6 +69,13 @@
             android:background="#FFFFFF"
             android:text="@string/TodoListViewButtonText" />
 
+        <Button
+            android:id="@+id/TodoHistoryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/todo_history_button_text" />
+
         <LinearLayout
             android:id="@+id/TodoListLayout"
             android:layout_width="match_parent"
@@ -124,6 +131,23 @@
                 android:layout_height="match_parent"
                 android:background="#ffffff"
                 tools:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/TodoHistoryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <ListView
+                android:id="@+id/TodoHistoryList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                tools:visibility="visible"
+                android:listSelector="@android:color/transparent"/>
 
         </LinearLayout>
 

@@ -13,4 +13,8 @@ class LifeEfficiencyException : RuntimeException {
     constructor(message: String?, cause: Throwable?) : super(message, cause)
 }
 
-data class TodoItem(val id: Int, val desc: String, val status: String, val date_added: String)
+data class TodoItem(val id: Int,
+                    val desc: String,
+                    val status: String,
+                    val date_added: String,
+                    val date_done: String)

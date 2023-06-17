@@ -307,13 +307,25 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                 }
     }
 
-    override fun todoList(): List<TodoItem> {
+    override fun todoNonCompleted() : List<TodoItem> {
         val httpUrl = endpoint.toHttpUrlOrNull()!!
                 .newBuilder()
                 .addPathSegment(TODO_PATH)
                 .addPathSegment("non_completed")
                 .build()
         return client.newCall(Request.Builder().url(httpUrl).get().build())
+                .execute()
+                .use { jsonArrayToTodoItemList(JSONArray(it.body!!.string())) }
+    }
+
+    override fun todoList(status: String?, sorted: Boolean): List<TodoItem> {
+        val httpUrlBuilder = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment("list")
+        status?.also { httpUrlBuilder.addQueryParameter("status", status) }
+        status?.also { httpUrlBuilder.addQueryParameter("sort", sorted.toString()) }
+        return client.newCall(Request.Builder().url(httpUrlBuilder.build()).get().build())
                 .execute()
                 .use { jsonArrayToTodoItemList(JSONArray(it.body!!.string())) }
     }
@@ -412,7 +424,8 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                             return@map TodoItem(item.getInt("id"),
                                     item.getString("desc"),
                                     item.getString("status"),
-                                    item.getString("date_added"))
+                                    item.getString("date_added"),
+                                    item.getString("date_done"))
                         } catch (e: JSONException) {
                             throw RuntimeException(e)
                         }
