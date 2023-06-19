@@ -1,5 +1,6 @@
 package com.leon.patmore.life.efficiency.client;
 
+import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.ListItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
 
@@ -25,7 +26,7 @@ interface LifeEfficiencyClient {
 
     fun completeItem(name: String, quantity: Int)
 
-    fun getHistory() : List<ListItem>
+    fun getHistory() : List<HistoryItem>
 
     fun todoNonCompleted() : List<TodoItem>
 

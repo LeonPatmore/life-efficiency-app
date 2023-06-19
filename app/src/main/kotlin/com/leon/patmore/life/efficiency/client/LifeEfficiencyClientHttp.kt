@@ -2,6 +2,7 @@ package com.leon.patmore.life.efficiency.client
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.LifeEfficiencyException
 import com.leon.patmore.life.efficiency.client.domain.ListItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
@@ -292,7 +293,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         }
     }
 
-    override fun getHistory(): List<ListItem> {
+    override fun getHistory(): List<HistoryItem> {
         val httpUrl = endpoint.toHttpUrlOrNull()!!
                 .newBuilder()
                 .addPathSegment(SHOPPING_PATH)
@@ -303,7 +304,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                 .execute()
                 .use {
                     val jsonObject = JSONObject(it.body!!.string())
-                    return jsonArrayToListOfItems(jsonObject.getJSONArray("purchases"))
+                    return jsonArrayToListOfHistoryItems(jsonObject.getJSONArray("purchases"))
                 }
     }
 
@@ -394,6 +395,27 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                     .map { item: JSONObject ->
                         try {
                             return@map ListItem(item.getString("name"), item.getInt("quantity"))
+                        } catch (e: JSONException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+                    .collect(Collectors.toList())
+        }
+
+        private fun jsonArrayToListOfHistoryItems(jsonArray: JSONArray): List<HistoryItem> {
+            return IntStream.range(0, jsonArray.length())
+                    .mapToObj { i: Int ->
+                        try {
+                            return@mapToObj jsonArray.getJSONObject(i)
+                        } catch (e: JSONException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+                    .map { item: JSONObject ->
+                        try {
+                            return@map HistoryItem(item.getString("name"),
+                                    item.getInt("quantity"),
+                                    item.getString("date"))
                         } catch (e: JSONException) {
                             throw RuntimeException(e)
                         }
