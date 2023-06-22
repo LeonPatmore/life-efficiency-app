@@ -6,6 +6,7 @@ import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.LifeEfficiencyException
 import com.leon.patmore.life.efficiency.client.domain.ListItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
+import com.leon.patmore.life.efficiency.client.domain.WeeklyItem
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -363,6 +364,30 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         validateResponse(res)
     }
 
+    override fun getWeekly(): List<WeeklyItem> {
+        val httpUrl = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment(WEEKLY_PATH)
+                .build()
+        return client.newCall(Request.Builder().get().url(httpUrl).build()).execute()
+                .use {jsonArrayToListOfWeeklyItems(JSONArray(it.body!!.string())) }
+    }
+
+    override fun completeWeeklyItem(id: Int) {
+        val httpUrl = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment(WEEKLY_PATH)
+                .addQueryParameter("id", id.toString())
+                .build()
+        val res = client.newCall(Request.Builder()
+                .method(POST_METHOD, "".toRequestBody())
+                .url(httpUrl).build())
+                .execute()
+        validateResponse(res)
+    }
+
     private fun validateResponse(res: Response) {
         val body = res.body?.string()
         Log.d(TAG, "Response code [ ${res.code} ] with body [ $body ]")
@@ -381,7 +406,30 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         private const val SHOPPING_ITEMS_PATH = "items"
         private const val SHOPPING_REPEATING_PATH = "repeating"
         private const val TODO_PATH = "todo"
+        private const val WEEKLY_PATH = "weekly"
         private val JSON_MEDIA_TYPE = "application/json".toMediaType()
+
+        private fun jsonArrayToListOfWeeklyItems(jsonArray: JSONArray): List<WeeklyItem> {
+            return IntStream.range(0, jsonArray.length())
+                    .mapToObj { i: Int ->
+                        try {
+                            return@mapToObj jsonArray.getJSONObject(i)
+                        } catch (e: JSONException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+                    .map { item: JSONObject ->
+                        try {
+                            return@map WeeklyItem(item.getInt("id"),
+                                    item.getInt("day"),
+                                    item.getString("desc"),
+                                    item.getBoolean("complete"))
+                        } catch (e: JSONException) {
+                            throw RuntimeException(e)
+                        }
+                    }
+                    .collect(Collectors.toList())
+        }
 
         private fun jsonArrayToListOfItems(jsonArray: JSONArray): List<ListItem> {
             return IntStream.range(0, jsonArray.length())

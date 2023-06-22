@@ -2,6 +2,7 @@ package com.leon.patmore.life.efficiency.client;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 
@@ -15,7 +16,11 @@ public class LifeEfficiencyClientConfiguration {
 
     public static OkHttpClient getOkHttpClientInstance() {
         if (OK_HTTP_CLIENT_INSTANCE == null) {
-            OK_HTTP_CLIENT_INSTANCE = new OkHttpClient();
+            OK_HTTP_CLIENT_INSTANCE = new OkHttpClient.Builder()
+                    .connectTimeout(20, TimeUnit.SECONDS)
+                    .writeTimeout(20, TimeUnit.SECONDS)
+                    .readTimeout(20, TimeUnit.SECONDS)
+                    .build();
         }
         return OK_HTTP_CLIENT_INSTANCE;
     }

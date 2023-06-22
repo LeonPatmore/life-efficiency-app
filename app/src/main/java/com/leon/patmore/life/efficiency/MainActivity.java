@@ -16,6 +16,7 @@ import com.leon.patmore.life.efficiency.views.ItemListView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
 import com.leon.patmore.life.efficiency.views.TodoHistoryView;
 import com.leon.patmore.life.efficiency.views.TodoListView;
+import com.leon.patmore.life.efficiency.views.WeeklyTodoView;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -102,6 +103,11 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.AddRepeatingItemViewButton),
                 lifeEfficiencyClient,
                 autoCompleteService));
+        viewManagerMap.put("weeklyTodo", new WeeklyTodoView(findViewById(R.id.WeeklyTodoLayout),
+                findViewById(R.id.WeeklyTodoButton),
+                findViewById(R.id.WeeklyTodoList),
+                getApplicationContext(),
+                lifeEfficiencyClient));
         new MultiViewManager(viewManagerMap);
     }
 

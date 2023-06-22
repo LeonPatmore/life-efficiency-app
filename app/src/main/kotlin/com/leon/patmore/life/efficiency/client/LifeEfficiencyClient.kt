@@ -3,6 +3,7 @@ package com.leon.patmore.life.efficiency.client;
 import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.ListItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
+import com.leon.patmore.life.efficiency.client.domain.WeeklyItem
 
 interface LifeEfficiencyClient {
 
@@ -35,5 +36,9 @@ interface LifeEfficiencyClient {
     fun updateTodoItemStatus(id: Int, status: String)
 
     fun addTodo(desc: String)
+
+    fun getWeekly(): List<WeeklyItem>
+
+    fun completeWeeklyItem(id: Int)
 
 }

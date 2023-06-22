@@ -76,6 +76,31 @@
             android:background="#FFFFFF"
             android:text="@string/todo_history_button_text" />
 
+        <Button
+            android:id="@+id/WeeklyTodoButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:text="@string/weekly_todo_button_text" />
+
+        <LinearLayout
+            android:id="@+id/WeeklyTodoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ListView
+                android:id="@+id/WeeklyTodoList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                tools:visibility="visible">
+
+            </ListView>
+
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/TodoListLayout"
             android:layout_width="match_parent"

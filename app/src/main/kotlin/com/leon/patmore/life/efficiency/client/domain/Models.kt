@@ -1,6 +1,9 @@
 package com.leon.patmore.life.efficiency.client.domain
 
 import java.lang.RuntimeException
+import java.time.DayOfWeek
+import java.time.format.TextStyle
+import java.util.Locale.ENGLISH
 
 data class ListItem(val name: String, val quantity: Int) {
     override fun toString(): String {
@@ -11,6 +14,13 @@ data class ListItem(val name: String, val quantity: Int) {
 data class HistoryItem(val name: String, val quantity: Int, val date_purchased: String) {
     override fun toString(): String {
         return "$name X $quantity | $date_purchased"
+    }
+}
+
+data class WeeklyItem(val id: Int, val day: Int, val desc: String, val complete: Boolean) {
+    override fun toString(): String {
+        val dayOfWeek = DayOfWeek.of(day).getDisplayName(TextStyle.SHORT, ENGLISH)
+        return "$dayOfWeek: $desc"
     }
 }
 
