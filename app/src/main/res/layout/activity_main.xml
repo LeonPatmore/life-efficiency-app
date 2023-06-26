@@ -14,74 +14,87 @@
         tools:visibility="visible">
 
         <Button
-            android:id="@+id/AddPurchaseButton"
+            android:id="@+id/BackButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/add_purchase_button_text" />
+            android:text="@string/back_button_text" />
 
-        <Button
-            android:id="@+id/itemListButton"
+        <LinearLayout
+            android:id="@+id/ButtonMenuLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/item_list_button_text" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/TodaysItemsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/todays_item_button_text" />
+            <Button
+                android:id="@+id/RepeatingItemsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/repeating_items_button_view" />
 
-        <Button
-            android:id="@+id/AddItemToListButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/add_item_to_list_button_text" />
+            <Button
+                android:id="@+id/TodoListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/TodoListViewButtonText" />
 
-        <Button
-            android:id="@+id/RepeatingItemsButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/repeating_items_button_view" />
+            <Button
+                android:id="@+id/AddItemToListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/add_item_to_list_button_text" />
 
-        <Button
-            android:id="@+id/AddRepeatingItemViewButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/add_repeating_item_view_button_text" />
+            <Button
+                android:id="@+id/AddRepeatingItemViewButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/add_repeating_item_view_button_text" />
 
-        <Button
-            android:id="@+id/historyViewButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/historyButtonText" />
+            <Button
+                android:id="@+id/WeeklyTodoButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/weekly_todo_button_text" />
 
-        <Button
-            android:id="@+id/TodoListButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/TodoListViewButtonText" />
+            <Button
+                android:id="@+id/AddPurchaseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/add_purchase_button_text" />
 
-        <Button
-            android:id="@+id/TodoHistoryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/todo_history_button_text" />
+            <Button
+                android:id="@+id/TodaysItemsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/todays_item_button_text" />
 
-        <Button
-            android:id="@+id/WeeklyTodoButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:text="@string/weekly_todo_button_text" />
+            <Button
+                android:id="@+id/historyViewButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/historyButtonText" />
+
+            <Button
+                android:id="@+id/itemListButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/item_list_button_text" />
+
+            <Button
+                android:id="@+id/TodoHistoryButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/todo_history_button_text" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/WeeklyTodoLayout"

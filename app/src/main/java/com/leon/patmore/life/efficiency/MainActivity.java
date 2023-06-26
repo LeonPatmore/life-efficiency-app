@@ -108,7 +108,9 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.WeeklyTodoList),
                 getApplicationContext(),
                 lifeEfficiencyClient));
-        new MultiViewManager(viewManagerMap);
+        new MultiViewManager(findViewById(R.id.ButtonMenuLayout),
+                findViewById(R.id.BackButton),
+                viewManagerMap);
     }
 
     private void setupViews() {

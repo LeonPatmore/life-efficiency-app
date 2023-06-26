@@ -24,4 +24,5 @@
     <string name="add_todo_text_hint">Todo description</string>
     <string name="todo_history_button_text">TODO History</string>
     <string name="weekly_todo_button_text">Weekly Todo</string>
+    <string name="back_button_text">Back to menu</string>
 </resources>
