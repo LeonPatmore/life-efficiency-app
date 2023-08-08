@@ -1,6 +1,7 @@
 package com.leon.patmore.life.efficiency.views
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,9 @@ class TodoListView(view: View,
                 inProgressButton.setOnClickListener {
                     runBlocking { withContext(Dispatchers.Default) { lifeEfficiencyClient.updateTodoItemStatus(todoItem.id, "in_progress") } }
                     setupTodoList()
+                }
+                if (todoItem.status == "in_progress") {
+                    view.setBackgroundColor(Color.argb(98, 250, 192, 94))
                 }
                 return view
             }

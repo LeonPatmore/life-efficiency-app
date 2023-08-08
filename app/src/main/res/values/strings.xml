@@ -1,19 +1,16 @@
 <resources>
     <string name="app_name">LifeEfficiencyApp</string>
     <string name="add_purchase_button_text">Add Purchase</string>
-    <string name="item_list_button_text">Item List</string>
     <string name="todays_item_button_text">Today\'s Items</string>
     <string name="purchase_name_default_text">item name</string>
     <string name="add_purchase_send_button_text">Send</string>
     <string name="default_quantity">1</string>
     <string name="confirm_today_button_text">Confirm</string>
-    <string name="add_item_to_list_button_text">Add to List</string>
     <string name="add_to_list_send_button_text">Send</string>
     <string name="quantity_button_hint">Quantity</string>
     <string name="repeating_items_button_view">Repeating Items</string>
     <string name="add_repeating_item_item_default_text">repeating item</string>
     <string name="add_repeating_item_button_text">Add</string>
-    <string name="add_repeating_item_view_button_text">Add Repeating Item</string>
     <string name="completeButtonText">Complete</string>
     <string name="deleteButtonText">Delete</string>
     <string name="historyButtonText">History</string>
@@ -25,4 +22,5 @@
     <string name="todo_history_button_text">TODO History</string>
     <string name="weekly_todo_button_text">Weekly Todo</string>
     <string name="back_button_text">Back to menu</string>
+    <string name="ShoppingListButtonText">Shopping List</string>
 </resources>

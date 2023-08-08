@@ -23,7 +23,8 @@
             android:id="@+id/ButtonMenuLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <Button
                 android:id="@+id/RepeatingItemsButton"
@@ -38,20 +39,6 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="@string/TodoListViewButtonText" />
-
-            <Button
-                android:id="@+id/AddItemToListButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:text="@string/add_item_to_list_button_text" />
-
-            <Button
-                android:id="@+id/AddRepeatingItemViewButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:text="@string/add_repeating_item_view_button_text" />
 
             <Button
                 android:id="@+id/WeeklyTodoButton"
@@ -82,11 +69,11 @@
                 android:text="@string/historyButtonText" />
 
             <Button
-                android:id="@+id/itemListButton"
+                android:id="@+id/ShoppingListButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:text="@string/item_list_button_text" />
+                android:text="@string/ShoppingListButtonText" />
 
             <Button
                 android:id="@+id/TodoHistoryButton"
@@ -101,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <ListView
                 android:id="@+id/WeeklyTodoList"
@@ -119,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/AddTodoLayout"
@@ -129,13 +116,13 @@
 
                 <EditText
                     android:id="@+id/AddTodoText"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:inputType="text"
+                    android:hint="@string/add_todo_text_hint"
                     android:importantForAutofill="no"
-                    tools:ignore="LabelFor"
-                    android:hint="@string/add_todo_text_hint" />
+                    android:inputType="text"
+                    tools:ignore="LabelFor" />
 
                 <Button
                     android:id="@+id/AddTodoButton"
@@ -150,21 +137,63 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
-                tools:visibility="visible" >
+                tools:visibility="visible">
 
             </ListView>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ItemListLayout"
+            android:id="@+id/ShoppingListLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="visible">
 
+            <LinearLayout
+                android:id="@+id/AddToShoppingListLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <AutoCompleteTextView
+                    android:id="@+id/AddToShoppingListItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="purchase"
+                    android:ems="10"
+                    android:hint="@string/purchase_name_default_text"
+                    android:inputType="textShortMessage" />
+
+                <EditText
+                    android:id="@+id/AddToShoppingListItemQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="quantity"
+                    android:hint="@string/quantity_button_hint"
+                    android:inputType="numberSigned"
+                    android:text="@string/default_quantity" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10"
+                android:gravity="center_horizontal">
+                <Button
+                    android:id="@+id/AddToShoppingListButton"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_to_list_send_button_text"
+                    tools:text="@string/add_to_list_send_button_text"
+                    android:layout_width="0dp"/>
+                </LinearLayout>
+            </LinearLayout>
+
             <ListView
-                android:id="@+id/ItemList"
+                android:id="@+id/ShoppingList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
@@ -177,15 +206,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ListView
                 android:id="@+id/TodoHistoryList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
-                tools:visibility="visible"
-                android:listSelector="@android:color/transparent"/>
+                android:listSelector="@android:color/transparent"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
@@ -194,49 +223,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <ListView
                 android:id="@+id/HistoryList"
-                android:listSelector="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffffff"
+                android:listSelector="@android:color/transparent"
                 tools:visibility="visible" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/AddToListLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <AutoCompleteTextView
-                android:id="@+id/AddToListPurchaseName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/purchase_name_default_text"
-                android:inputType="textShortMessage"
-                android:autofillHints="purchase"/>
-
-            <EditText
-                android:id="@+id/AddToListPurchaseQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="quantity"
-                android:hint="@string/quantity_button_hint"
-                android:inputType="numberSigned"
-                android:text="@string/default_quantity" />
-
-            <Button
-                android:id="@+id/AddToListSendButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_to_list_send_button_text"
-                tools:text="@string/add_to_list_send_button_text" />
         </LinearLayout>
 
         <LinearLayout
@@ -244,16 +240,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <AutoCompleteTextView
                 android:id="@+id/PurchaseName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="purchase"
                 android:ems="10"
                 android:hint="@string/purchase_name_default_text"
-                android:inputType="textPersonName"
-                android:autofillHints="purchase"/>
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/PurchaseQuantity"
@@ -279,7 +275,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
 
             <ListView
                 android:id="@+id/ShoppingItemList"
@@ -300,40 +296,41 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/AddRepeatingItemLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="invisible">
-
-            <AutoCompleteTextView
-                android:id="@+id/AddRepeatingItemItem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/add_repeating_item_item_default_text"
-                android:inputType="textPersonName"
-                android:autofillHints="repeating_item"/>
-
-            <Button
-                android:id="@+id/AddRepatingItemButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/add_repeating_item_button_text" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/RepeatingItemsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="invisible">
+            android:visibility="gone">
+
+            <LinearLayout
+                android:id="@+id/AddRepeatingItemLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <AutoCompleteTextView
+                    android:id="@+id/AddRepeatingItemItem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:autofillHints="repeating_item"
+                    android:ems="10"
+                    android:hint="@string/add_repeating_item_item_default_text"
+                    android:inputType="text" />
+
+                <Button
+                    android:id="@+id/AddRepatingItemButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/add_repeating_item_button_text" />
+            </LinearLayout>
 
             <ListView
                 android:id="@+id/RepeatingItemsList"
-                android:listSelector="@android:color/transparent"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:listSelector="@android:color/transparent" />
         </LinearLayout>
     </LinearLayout>
 
