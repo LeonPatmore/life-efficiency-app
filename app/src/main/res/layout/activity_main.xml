@@ -27,18 +27,11 @@
             android:visibility="visible">
 
             <Button
-                android:id="@+id/RepeatingItemsButton"
+                android:id="@+id/ShoppingListButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:text="@string/repeating_items_button_view" />
-
-            <Button
-                android:id="@+id/TodoListButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:text="@string/TodoListViewButtonText" />
+                android:text="@string/ShoppingListButtonText" />
 
             <Button
                 android:id="@+id/WeeklyTodoButton"
@@ -48,11 +41,11 @@
                 android:text="@string/weekly_todo_button_text" />
 
             <Button
-                android:id="@+id/AddPurchaseButton"
+                android:id="@+id/TodoListButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
-                android:text="@string/add_purchase_button_text" />
+                android:text="@string/TodoListViewButtonText" />
 
             <Button
                 android:id="@+id/TodaysItemsButton"
@@ -62,18 +55,25 @@
                 android:text="@string/todays_item_button_text" />
 
             <Button
+                android:id="@+id/AddPurchaseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/add_purchase_button_text" />
+
+            <Button
+                android:id="@+id/RepeatingItemsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/repeating_items_button_view" />
+
+            <Button
                 android:id="@+id/historyViewButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="@string/historyButtonText" />
-
-            <Button
-                android:id="@+id/ShoppingListButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#FFFFFF"
-                android:text="@string/ShoppingListButtonText" />
 
             <Button
                 android:id="@+id/TodoHistoryButton"
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/AddToShoppingListLayout"
@@ -175,20 +175,21 @@
                     android:inputType="numberSigned"
                     android:text="@string/default_quantity" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="10"
-                android:gravity="center_horizontal">
-                <Button
-                    android:id="@+id/AddToShoppingListButton"
-                    android:layout_gravity="center"
-                    android:layout_weight="5"
-                    android:layout_height="wrap_content"
-                    android:text="@string/add_to_list_send_button_text"
-                    tools:text="@string/add_to_list_send_button_text"
-                    android:layout_width="0dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="10">
+
+                    <Button
+                        android:id="@+id/AddToShoppingListButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="5"
+                        android:text="@string/add_to_list_send_button_text"
+                        tools:text="@string/add_to_list_send_button_text" />
                 </LinearLayout>
             </LinearLayout>
 
