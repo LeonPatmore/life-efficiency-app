@@ -2,8 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "34.0.0-rc4"
+    defaultConfig {
+        compileSdk 33
+        buildToolsVersion = "34.0.0-rc4"
+    }
     namespace "com.leon.patmore.life.efficiency"
 
     compileOptions {
@@ -35,7 +37,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("org.json:json:20230227")
+    implementation("org.json:json:20230618")
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
