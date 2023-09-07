@@ -2,6 +2,7 @@ package com.leon.patmore.life.efficiency.client
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.leon.patmore.life.efficiency.client.domain.Goal
 import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.LifeEfficiencyException
 import com.leon.patmore.life.efficiency.client.domain.ListItem
@@ -388,6 +389,35 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         validateResponse(res)
     }
 
+    override fun getGoals(): Map<String, Map<String, List<Goal>>> {
+        val httpUrl = endpoint.toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(GOALS_PATH)
+                .addPathSegment("list")
+                .build()
+        return client.newCall(Request.Builder().get().url(httpUrl).build()).execute()
+                .use { JSONObject(it.body!!.string()) }
+                .let {
+                    val goalMap = mutableMapOf<String, Map<String, List<Goal>>>()
+                    for (year in it.keys()) {
+                        val yearObject = it.getJSONObject(year)
+                        val yearMap = mutableMapOf<String, List<Goal>>()
+                        for (quarter in yearObject.keys()) {
+                            val goalArrayList = yearObject.getJSONArray(quarter)
+                            val goalList = mutableListOf<Goal>()
+                            repeat(goalArrayList.length()) { index ->
+                                val goalObject = goalArrayList.getJSONObject(index)
+                                goalList.add(Goal(goalObject.getString("name"),
+                                        goalObject.getString("progress")))
+                            }
+                            yearMap[quarter] = goalList
+                        }
+                        goalMap[year] = yearMap
+                    }
+                    goalMap
+                }
+    }
+
     private fun validateResponse(res: Response) {
         val body = res.body?.string()
         Log.d(TAG, "Response code [ ${res.code} ] with body [ $body ]")
@@ -407,6 +437,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         private const val SHOPPING_REPEATING_PATH = "repeating"
         private const val TODO_PATH = "todo"
         private const val WEEKLY_PATH = "weekly"
+        private const val GOALS_PATH = "goals"
         private val JSON_MEDIA_TYPE = "application/json".toMediaType()
 
         private fun jsonArrayToListOfWeeklyItems(jsonArray: JSONArray): List<WeeklyItem> {

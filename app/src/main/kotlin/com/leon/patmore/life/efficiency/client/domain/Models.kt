@@ -34,3 +34,5 @@ data class TodoItem(val id: Int,
                     val status: String,
                     val date_added: String,
                     val date_done: String)
+
+data class Goal(val name: String, val progress: String)

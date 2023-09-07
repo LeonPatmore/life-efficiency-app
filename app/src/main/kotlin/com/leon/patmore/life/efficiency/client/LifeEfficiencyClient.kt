@@ -1,5 +1,6 @@
 package com.leon.patmore.life.efficiency.client;
 
+import com.leon.patmore.life.efficiency.client.domain.Goal
 import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.ListItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
@@ -40,5 +41,7 @@ interface LifeEfficiencyClient {
     fun getWeekly(): List<WeeklyItem>
 
     fun completeWeeklyItem(id: Int)
+
+    fun getGoals(): Map<String, Map<String, List<Goal>>>
 
 }

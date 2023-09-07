@@ -23,4 +23,5 @@
     <string name="weekly_todo_button_text">Weekly Todo</string>
     <string name="back_button_text">Back to menu</string>
     <string name="ShoppingListButtonText">Shopping List</string>
+    <string name="GoalsButtonText">Goals</string>
 </resources>

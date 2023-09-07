@@ -81,6 +81,13 @@
                 android:layout_height="wrap_content"
                 android:background="#FFFFFF"
                 android:text="@string/todo_history_button_text" />
+
+            <Button
+                android:id="@+id/GoalsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:text="@string/GoalsButtonText" />
         </LinearLayout>
 
         <LinearLayout
@@ -332,7 +339,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:listSelector="@android:color/transparent" />
+
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/GoalsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ListView
+                android:id="@+id/GoalsList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                tools:visibility="visible">
+            </ListView>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

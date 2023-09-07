@@ -9,6 +9,7 @@ import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient;
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
 import com.leon.patmore.life.efficiency.views.ActiveView;
 import com.leon.patmore.life.efficiency.views.AddPurchaseView;
+import com.leon.patmore.life.efficiency.views.GoalsView;
 import com.leon.patmore.life.efficiency.views.HistoryView;
 import com.leon.patmore.life.efficiency.views.MultiViewManager;
 import com.leon.patmore.life.efficiency.views.RepeatingItemView;
@@ -97,6 +98,11 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.WeeklyTodoList),
                 getApplicationContext(),
                 lifeEfficiencyClient));
+        viewManagerMap.put("goals", new GoalsView(findViewById(R.id.GoalsLayout),
+                findViewById(R.id.GoalsButton),
+                lifeEfficiencyClient,
+                getApplicationContext(),
+                findViewById(R.id.GoalsList)));
         new MultiViewManager(findViewById(R.id.ButtonMenuLayout),
                 findViewById(R.id.BackButton),
                 viewManagerMap);
