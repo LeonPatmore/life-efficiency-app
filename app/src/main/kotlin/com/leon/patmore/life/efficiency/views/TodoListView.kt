@@ -57,6 +57,8 @@ class TodoListView(view: View,
                 }
                 if (todoItem.status == "in_progress") {
                     view.setBackgroundColor(Color.argb(98, 250, 192, 94))
+                } else {
+                    view.setBackgroundColor(Color.argb(0, 255, 255, 255))
                 }
                 return view
             }
