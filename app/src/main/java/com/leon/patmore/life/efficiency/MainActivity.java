@@ -1,7 +1,6 @@
 package com.leon.patmore.life.efficiency;
 
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,10 +16,10 @@ import com.leon.patmore.life.efficiency.views.ShoppingListView;
 import com.leon.patmore.life.efficiency.views.TodoHistoryView;
 import com.leon.patmore.life.efficiency.views.TodoListView;
 import com.leon.patmore.life.efficiency.views.WeeklyTodoView;
+import com.leon.patmore.life.efficiency.views.todays.items.TodaysItemsView;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,21 +29,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String REPEATING_ITEMS_VIEW_NAME = "repeating_items";
     private static final String HISTORY_VIEW_NAME = "history";
 
-    private TodayItemsViewManager todayItemsViewManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        setupViews();
         setupViewManager();
     }
 
     private void setupViewManager() {
         LifeEfficiencyClient lifeEfficiencyClient = LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance();
         AutoCompleteService autoCompleteService = new AutoCompleteService(lifeEfficiencyClient);
-        LinearLayout todaysItemLayout = findViewById(R.id.TodaysItemsLayout);
         Map<String, ActiveView> viewManagerMap = new HashMap<>();
         viewManagerMap.put(SHOPPING_LIST_VIEW_NAME, new ShoppingListView(findViewById(R.id.ShoppingListLayout),
                 findViewById(R.id.ShoppingListButton),
@@ -67,16 +61,12 @@ public class MainActivity extends AppCompatActivity {
                 findViewById(R.id.TodoHistoryList),
                 lifeEfficiencyClient,
                 getApplicationContext()));
-        viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new ActiveView(todaysItemLayout, findViewById(R.id.TodaysItemsButton)) {
-            @Override
-            public void onActive() {
-                try {
-                    todayItemsViewManager.refreshList();
-                } catch (ExecutionException | InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        viewManagerMap.put(TODAYS_ITEMS_VIEW_NAME, new TodaysItemsView(findViewById(R.id.TodaysItemsLayout),
+                findViewById(R.id.TodaysItemsButton),
+                findViewById(R.id.ShoppingItemList),
+                getApplicationContext(),
+                findViewById(R.id.ConfirmTodayButton),
+                lifeEfficiencyClient));
         viewManagerMap.put(REPEATING_ITEMS_VIEW_NAME, new RepeatingItemView(findViewById(R.id.RepeatingItemsLayout),
                 findViewById(R.id.RepeatingItemsButton),
                 findViewById(R.id.AddRepatingItemButton),
@@ -106,17 +96,6 @@ public class MainActivity extends AppCompatActivity {
         new MultiViewManager(findViewById(R.id.ButtonMenuLayout),
                 findViewById(R.id.BackButton),
                 viewManagerMap);
-    }
-
-    private void setupViews() {
-        try {
-            todayItemsViewManager = new TodayItemsViewManager(findViewById(R.id.ShoppingItemList),
-                    getApplicationContext(),
-                    findViewById(R.id.ConfirmTodayButton));
-        } catch (ExecutionException | InterruptedException e) {
-            System.err.println("Could not create today's item view manager!");
-            e.printStackTrace();
-        }
     }
 
 }

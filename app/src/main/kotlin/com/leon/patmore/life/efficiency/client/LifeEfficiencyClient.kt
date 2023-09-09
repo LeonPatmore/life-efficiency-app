@@ -12,8 +12,6 @@ interface LifeEfficiencyClient {
 
     fun getTodayItems(): List<String>
 
-    fun acceptTodayItems()
-
     fun addPurchase(name: String, quantity: Int)
 
     fun addToList(name: String, quantity: Int)

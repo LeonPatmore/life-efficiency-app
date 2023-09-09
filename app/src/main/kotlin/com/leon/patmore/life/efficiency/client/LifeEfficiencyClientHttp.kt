@@ -29,7 +29,7 @@ import java.util.stream.IntStream
 
 class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: OkHttpClient) : LifeEfficiencyClient {
 
-    private val TAG = javaClass.name
+    private val tag = javaClass.name
 
     @Throws(URISyntaxException::class, MalformedURLException::class)
     private fun getAbsoluteEndpoint(vararg pathComponents: String): URL {
@@ -41,7 +41,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun getListItems(): List<ListItem> {
-        Log.i(TAG, "Getting list items!")
+        Log.i(tag, "Getting list items!")
         val request: Request = try {
             Request.Builder()
                     .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_LIST_PATH))
@@ -54,7 +54,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 val jsonObject = JSONObject(resBody)
@@ -68,7 +68,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun getTodayItems(): List<String> {
-        Log.i(TAG, "Getting today's items!")
+        Log.i(tag, "Getting today's items!")
         val request: Request = try {
             Request.Builder()
                     .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_TODAY_PATH))
@@ -81,7 +81,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 val jsonObject = JSONObject(resBody)
@@ -94,32 +94,8 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         }
     }
 
-    override fun acceptTodayItems() {
-        Log.i(TAG, "Accepting today's items!")
-        val request: Request = try {
-            Request.Builder()
-                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_TODAY_PATH))
-                    .method(POST_METHOD, null)
-                    .build()
-        } catch (e: URISyntaxException) {
-            throw LifeEfficiencyException("Problem constructing HTTP request!", e)
-        } catch (e: MalformedURLException) {
-            throw LifeEfficiencyException("Problem constructing HTTP request!", e)
-        }
-        try {
-            client.newCall(request).execute().use { response ->
-                val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
-                        response.code,
-                        resBody))
-            }
-        } catch (e: IOException) {
-            throw LifeEfficiencyException("Problem during HTTP call!", e)
-        }
-    }
-
     override fun addPurchase(name: String, quantity: Int) {
-        Log.i(TAG, String.format("Adding a purchase with name [ %s ] and quantity [ %d ]",
+        Log.i(tag, String.format("Adding a purchase with name [ %s ] and quantity [ %d ]",
                 name,
                 quantity))
         @SuppressLint("DefaultLocale") val body = String.format("{\"name\": \"%s\", \"quantity\": \"%d\"}", name, quantity)
@@ -138,7 +114,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun addToList(name: String, quantity: Int) {
-        Log.i(TAG, String.format("Adding item to list with name [ %s ] and quantity [ %d ]",
+        Log.i(tag, String.format("Adding item to list with name [ %s ] and quantity [ %d ]",
                 name,
                 quantity))
         @SuppressLint("DefaultLocale") val body = String.format("{\"name\": \"%s\", \"quantity\": \"%d\"}", name, quantity)
@@ -156,7 +132,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 if (response.code != 200) throw LifeEfficiencyException("Unexpected response code from endpoint!")
@@ -167,9 +143,9 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun completeItems(items: List<String>) {
-        Log.i(TAG, String.format("Completing items [ %s ]", java.lang.String.join(",", items)))
+        Log.i(tag, String.format("Completing items [ %s ]", java.lang.String.join(",", items)))
         val jsonList = "[\"" + java.lang.String.join("\",\"", items) + "\"]"
-        Log.i(TAG, "json list is $jsonList")
+        Log.i(tag, "json list is $jsonList")
         @SuppressLint("DefaultLocale") val body = String.format("{\"items\": %s}", jsonList)
         val requestBody: RequestBody = body.toRequestBody(JSON_MEDIA_TYPE)
         val request: Request = try {
@@ -185,7 +161,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 if (response.code != 200) throw LifeEfficiencyException("Unexpected response code from endpoint!")
@@ -196,7 +172,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun getRepeatingItems(): List<String> {
-        Log.i(TAG, "Getting repeated items!")
+        Log.i(tag, "Getting repeated items!")
         val request: Request = try {
             Request.Builder()
                     .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_REPEATING_PATH))
@@ -209,7 +185,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 val jsonObject = JSONObject(resBody)
@@ -223,7 +199,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun addRepeatingItem(item: String) {
-        Log.i(TAG, String.format("Adding repeating items [ %s ]", item))
+        Log.i(tag, String.format("Adding repeating items [ %s ]", item))
         @SuppressLint("DefaultLocale") val body = String.format("{\"item\": \"%s\"}", item)
         val requestBody: RequestBody = body.toRequestBody(JSON_MEDIA_TYPE)
         val request: Request = try {
@@ -240,7 +216,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun deleteListItem(name: String, quantity: Int) {
-        Log.i(TAG, String.format("Deleting list item [ %s ] with quantity [ %s ]", name, quantity))
+        Log.i(tag, String.format("Deleting list item [ %s ] with quantity [ %s ]", name, quantity))
         val request: Request
         val httpUrl = endpoint.toHttpUrlOrNull()!!
                 .newBuilder()
@@ -249,7 +225,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                 .addQueryParameter("name", name)
                 .addQueryParameter("quantity", quantity.toString())
                 .build()
-        Log.i(TAG, String.format("Delete list item [ %s ]", httpUrl.toUrl()))
+        Log.i(tag, String.format("Delete list item [ %s ]", httpUrl.toUrl()))
         request = Request.Builder()
                 .url(httpUrl)
                 .method("DELETE", null)
@@ -257,7 +233,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 if (response.code != 200) throw LifeEfficiencyException(String.format("Unexpected response code %s from endpoint!", response.code))
@@ -268,7 +244,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun completeItem(name: String, quantity: Int) {
-        Log.i(TAG, String.format("Completing item [ %s ] with quantity [ %s ]", name, quantity))
+        Log.i(tag, String.format("Completing item [ %s ] with quantity [ %s ]", name, quantity))
         val request: Request
         val httpUrl = endpoint.toHttpUrlOrNull()!!
                 .newBuilder()
@@ -277,7 +253,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                 .addQueryParameter("name", name)
                 .addQueryParameter("quantity", quantity.toString())
                 .build()
-        Log.i(TAG, String.format("Complete item [ %s ]", httpUrl.toUrl()))
+        Log.i(tag, String.format("Complete item [ %s ]", httpUrl.toUrl()))
         request = Request.Builder()
                 .url(httpUrl)
                 .method("DELETE", null)
@@ -285,7 +261,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         try {
             client.newCall(request).execute().use { response ->
                 val resBody = response.body!!.string()
-                Log.d(TAG, String.format("Response code [ %d ] with body [ %s ]",
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
                         response.code,
                         resBody))
                 if (response.code != 200) throw LifeEfficiencyException(String.format("Unexpected response code %s from endpoint!", response.code))
@@ -334,7 +310,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun updateTodoItemStatus(id: Int, status: String) {
-        Log.i(TAG, "Updating todo item id [ %d ] to status [ %s ]".format(id, status))
+        Log.i(tag, "Updating todo item id [ %d ] to status [ %s ]".format(id, status))
 
         val httpUrl = endpoint.toHttpUrlOrNull()!!
                 .newBuilder()
@@ -350,7 +326,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
     }
 
     override fun addTodo(desc: String) {
-        Log.i(TAG, "Adding todo with desc [ {$desc ]")
+        Log.i(tag, "Adding todo with desc [ {$desc ]")
 
         val httpUrl = endpoint.toHttpUrlOrNull()!!
                 .newBuilder()
@@ -420,9 +396,9 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
 
     private fun validateResponse(res: Response) {
         val body = res.body?.string()
-        Log.d(TAG, "Response code [ ${res.code} ] with body [ $body ]")
+        Log.d(tag, "Response code [ ${res.code} ] with body [ $body ]")
         if (res.code != 200) {
-            Log.w(TAG, "Unexpected response code [ ${res.code} ] from endpoint, body [ $body ]")
+            Log.w(tag, "Unexpected response code [ ${res.code} ] from endpoint, body [ $body ]")
             throw LifeEfficiencyException("Unexpected response code [ {} ] from endpoint!")
         }
     }
