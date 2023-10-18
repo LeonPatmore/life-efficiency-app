@@ -3,6 +3,7 @@ package com.leon.patmore.life.efficiency.client;
 import com.leon.patmore.life.efficiency.client.domain.Goal
 import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.ListItem
+import com.leon.patmore.life.efficiency.client.domain.RepeatingItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
 import com.leon.patmore.life.efficiency.client.domain.WeeklyItem
 
@@ -19,6 +20,8 @@ interface LifeEfficiencyClient {
     fun completeItems(items: List<String>)
 
     fun getRepeatingItems(): List<String>
+
+    fun getRepeatingItemsDetails(): Map<String, RepeatingItem>
 
     fun addRepeatingItem(item: String)
 

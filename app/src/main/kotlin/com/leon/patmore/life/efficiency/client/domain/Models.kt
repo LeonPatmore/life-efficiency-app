@@ -36,3 +36,5 @@ data class TodoItem(val id: Int,
                     val date_done: String)
 
 data class Goal(val name: String, val progress: String)
+
+data class RepeatingItem(val averageGapDays: Int?, val daysSinceLastBought: Int?)

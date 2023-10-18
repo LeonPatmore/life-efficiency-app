@@ -2,10 +2,12 @@ package com.leon.patmore.life.efficiency.client
 
 import android.annotation.SuppressLint
 import android.util.Log
+import com.leon.patmore.life.efficiency.client.Utils.toIntIgnoreNull
 import com.leon.patmore.life.efficiency.client.domain.Goal
 import com.leon.patmore.life.efficiency.client.domain.HistoryItem
 import com.leon.patmore.life.efficiency.client.domain.LifeEfficiencyException
 import com.leon.patmore.life.efficiency.client.domain.ListItem
+import com.leon.patmore.life.efficiency.client.domain.RepeatingItem
 import com.leon.patmore.life.efficiency.client.domain.TodoItem
 import com.leon.patmore.life.efficiency.client.domain.WeeklyItem
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
@@ -190,6 +192,33 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                         resBody))
                 val jsonObject = JSONObject(resBody)
                 return jsonArrayToList(jsonObject.getJSONArray("items"))
+            }
+        } catch (e: IOException) {
+            throw LifeEfficiencyException("Problem during HTTP call!", e)
+        } catch (e: JSONException) {
+            throw LifeEfficiencyException("Problem during HTTP call!", e)
+        }
+    }
+
+    override fun getRepeatingItemsDetails(): Map<String, RepeatingItem> {
+        Log.i(tag, "Getting repeated items details!")
+        val request: Request = try {
+            Request.Builder()
+                    .url(getAbsoluteEndpoint(SHOPPING_PATH, SHOPPING_REPEATING_DETAILS_PATH))
+                    .build()
+        } catch (e: URISyntaxException) {
+            throw LifeEfficiencyException("Problem constructing HTTP request!", e)
+        } catch (e: MalformedURLException) {
+            throw LifeEfficiencyException("Problem constructing HTTP request!", e)
+        }
+        try {
+            client.newCall(request).execute().use { response ->
+                val resBody = response.body!!.string()
+                Log.d(tag, String.format("Response code [ %d ] with body [ %s ]",
+                        response.code,
+                        resBody))
+                val jsonObject = JSONObject(resBody)
+                return jsonObjectToMapOfRepeatingItems(jsonObject)
             }
         } catch (e: IOException) {
             throw LifeEfficiencyException("Problem during HTTP call!", e)
@@ -411,6 +440,7 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
         private const val SHOPPING_LIST_PATH = "list"
         private const val SHOPPING_ITEMS_PATH = "items"
         private const val SHOPPING_REPEATING_PATH = "repeating"
+        private const val SHOPPING_REPEATING_DETAILS_PATH = "repeating-details"
         private const val TODO_PATH = "todo"
         private const val WEEKLY_PATH = "weekly"
         private const val GOALS_PATH = "goals"
@@ -485,6 +515,16 @@ class LifeEfficiencyClientHttp(private val endpoint: URL, private val client: Ok
                 stringArrayList.add(jsonArray.getString(i))
             }
             return stringArrayList
+        }
+
+        private fun jsonObjectToMapOfRepeatingItems(jsonObject: JSONObject): Map<String, RepeatingItem> {
+            val finalMap = mutableMapOf<String, RepeatingItem>()
+            jsonObject.keys().forEachRemaining {
+                val thisItem = jsonObject.getJSONObject(it)
+                finalMap[it] = RepeatingItem(thisItem.getString("avg_gap_days").toIntIgnoreNull(),
+                        thisItem.getString("time_since_last_bought").toIntIgnoreNull())
+            }
+            return finalMap
         }
 
         private fun jsonArrayToTodoItemList(jsonArray: JSONArray): List<TodoItem> {
