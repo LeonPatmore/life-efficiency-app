@@ -3,6 +3,7 @@ package com.leon.patmore.life.efficiency;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient;
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration;
@@ -32,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setupViewManager();
+        DataBindingUtil.setContentView(this, R.layout.main_menu);
+//        setupViewManager();
     }
 
     private void setupViewManager() {

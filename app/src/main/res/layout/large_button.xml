@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="myText"
+            type="String" />
+        <variable
+            name="iconRes"
+            type="android.graphics.drawable.Drawable" />
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:padding="30dp"
+        android:text="@{myText}"
+        android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+        app:cornerRadius="25dp"
+        app:icon="@{iconRes}"
+        app:iconGravity="textEnd"
+        app:iconPadding="10dp"
+        app:layout_constraintWidth_max="320dp" />
+
+</layout>
