@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/MainLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/ShoppingButtonLayout"
+            android:id="@+id/ShoppingListButtonLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <include
-                android:id="@+id/ShoppingButton"
+                android:id="@+id/ShoppingListButton"
                 layout="@layout/large_button"
                 app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_shopping_cart_24)}"
-                app:myText="@{`Shopping!`}" />
+                app:myText="@{`Shopping List`}" />
         </LinearLayout>
 
 
@@ -26,13 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ShoppingButtonLayout">
+            app:layout_constraintTop_toBottomOf="@id/ShoppingListButtonLayout">
 
             <include
                 android:id="@+id/TodoButton"
                 layout="@layout/large_button"
-                app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_checklist_24)}"
-                app:myText="@{`TODO!`}" />
+                app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_today_24)}"
+                app:myText="@{`Todays Items`}" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

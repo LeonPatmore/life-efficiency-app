@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/ShoppingListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shopping List"
+            android:textAlignment="center"
+            android:textColor="@color/titleText"
+            android:padding="10dp"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <LinearLayout
+            android:id="@+id/AddToShoppingListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <AutoCompleteTextView
+                android:id="@+id/AddToShoppingListItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:autofillHints="purchase"
+                android:ems="10"
+                android:hint="@string/purchase_name_default_text"
+                android:inputType="textShortMessage" />
+
+            <EditText
+                android:id="@+id/AddToShoppingListItemQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:autofillHints="quantity"
+                android:hint="@string/quantity_button_hint"
+                android:inputType="numberSigned"
+                android:text="@string/default_quantity" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <Button
+                    android:id="@+id/AddToShoppingListButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:text="@string/add_to_list_send_button_text"
+                    tools:text="@string/add_to_list_send_button_text" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <ListView
+            android:id="@+id/ShoppingList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            tools:visibility="visible" />
+
+    </LinearLayout>
+</layout>
