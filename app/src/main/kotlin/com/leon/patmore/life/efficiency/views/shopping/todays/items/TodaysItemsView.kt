@@ -19,13 +19,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class TodaysItemsViewManager(view: View,
-                             button: Button,
-                             private val listView: ListView,
-                             private val context: Context,
-                             private val confirmButton: Button,
-                             private val lifeEfficiencyClient: LifeEfficiencyClient) : ActiveView(view, button)  {
-
+class TodaysItemsViewManager(
+    view: View,
+    button: Button,
+    private val listView: ListView,
+    private val context: Context,
+    private val confirmButton: Button,
+    private val lifeEfficiencyClient: LifeEfficiencyClient,
+) : ActiveView(view, button) {
     private val itemStateManager = ItemStateManager()
     private val tag = javaClass.name
     private var alreadyClicked = false
@@ -40,29 +41,39 @@ class TodaysItemsViewManager(view: View,
     }
 
     private fun refreshList() {
-        val todaysItems = runBlocking {
-            withContext(Dispatchers.Default) {
-                lifeEfficiencyClient.getTodayItems()
+        val todaysItems =
+            runBlocking {
+                withContext(Dispatchers.Default) {
+                    lifeEfficiencyClient.getTodayItems()
+                }
             }
-        }
         itemStateManager.clear()
-        val listAdapter = object: ArrayAdapter<String>(context, R.layout.simple_list_item, todaysItems) {
-            val inflater = LayoutInflater.from(context)
-            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val view = convertView ?: inflater.inflate(R.layout.simple_list_item, parent, false)
-                val thisItem = this.getItem(position)!!
-                val textField = view.findViewById(R.id.textField) as TextView
-                textField.textSize = 20f
-                textField.text = thisItem
-                setItemBackground(view, itemStateManager.itemActive(thisItem))
-                textField.setOnClickListener { onItemClicked(view, position) }
-                return view
+        val listAdapter =
+            object : ArrayAdapter<String>(context, R.layout.simple_list_item, todaysItems) {
+                val inflater = LayoutInflater.from(context)
+
+                override fun getView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup,
+                ): View {
+                    val view = convertView ?: inflater.inflate(R.layout.simple_list_item, parent, false)
+                    val thisItem = this.getItem(position)!!
+                    val textField = view.findViewById(R.id.textField) as TextView
+                    textField.textSize = 20f
+                    textField.text = thisItem
+                    setItemBackground(view, itemStateManager.itemActive(thisItem))
+                    textField.setOnClickListener { onItemClicked(view, position) }
+                    return view
+                }
             }
-        }
         listView.adapter = listAdapter
     }
 
-    private fun onItemClicked(view: View, position: Int) {
+    private fun onItemClicked(
+        view: View,
+        position: Int,
+    ) {
         val clickedItem = listView.getItemAtPosition(position) as String
         if (alreadyClicked) {
             Log.i(tag, "Flipping ${listView.getItemAtPosition(position)}")
@@ -80,8 +91,10 @@ class TodaysItemsViewManager(view: View,
         }
     }
 
-    private fun setItemBackground(view: View, isActive: Boolean) =
-            view.setBackgroundColor(if (isActive) ACTIVE_COLOUR else INACTIVE_COLOUR)
+    private fun setItemBackground(
+        view: View,
+        isActive: Boolean,
+    ) = view.setBackgroundColor(if (isActive) ACTIVE_COLOUR else INACTIVE_COLOUR)
 
     private fun setupConfirmButton() = confirmButton.setOnClickListener { confirm() }
 
@@ -99,5 +112,4 @@ class TodaysItemsViewManager(view: View,
         private val INACTIVE_COLOUR = Color.argb(150, 250, 100, 100)
         private val ACTIVE_COLOUR = Color.argb(150, 100, 250, 100)
     }
-
 }

@@ -7,25 +7,27 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.leon.patmore.life.efficiency.views.shopping.ShoppingListViewManager
-import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
-
-
+import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration
+import com.leon.patmore.life.efficiency.views.shopping.ShoppingListViewManager
 
 class MainActivity : AppCompatActivity() {
+    private val lifeEfficiencyClient: LifeEfficiencyClient = LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()
+    private val autoCompleteService: AutoCompleteService = AutoCompleteService(lifeEfficiencyClient)
 
-    private val lifeEfficiencyClient:LifeEfficiencyClient = LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()
-    private val autoCompleteService:AutoCompleteService = AutoCompleteService(lifeEfficiencyClient)
+    private val shoppingListSubViews =
+        mutableListOf(
+            ViewData(
+                buttonId = R.id.ShoppingListButton,
+                layoutId = R.layout.view_shopping_list,
+                viewManager = ShoppingListViewManager(lifeEfficiencyClient, autoCompleteService),
+            ),
+        )
 
-    private val shoppingListSubViews = mutableListOf(
-        ViewData(buttonId = R.id.ShoppingListButton,
-            layoutId = R.layout.view_shopping_list,
-            viewManager = ShoppingListViewManager(lifeEfficiencyClient, autoCompleteService)
-        ))
-
-    private val viewButtons= listOf(
-        ViewData(R.id.ShoppingButton, R.layout.view_shopping_menu, subViews = shoppingListSubViews))
+    private val viewButtons =
+        listOf(
+            ViewData(R.id.ShoppingButton, R.layout.view_shopping_menu, subViews = shoppingListSubViews),
+        )
 
     init {
         shoppingListSubViews.add(ViewData(R.id.ShoppingMenuBackButton, R.layout.view_main_menu, subViews = viewButtons))
@@ -49,14 +51,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 }
 
-data class ViewData(val buttonId: Int,
-                    val layoutId: Int,
-                    val viewManager: ViewManager? = null,
-                    val subViews: List<ViewData> = emptyList())
+data class ViewData(
+    val buttonId: Int,
+    val layoutId: Int,
+    val viewManager: ViewManager? = null,
+    val subViews: List<ViewData> = emptyList(),
+)
 
 fun interface ViewManager {
-    fun onActive(view: View, context: Context)
+    fun onActive(
+        view: View,
+        context: Context,
+    )
 }

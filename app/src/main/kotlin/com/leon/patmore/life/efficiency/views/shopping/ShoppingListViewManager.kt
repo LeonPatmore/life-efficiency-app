@@ -24,12 +24,14 @@ import java.lang.Exception
 
 class ShoppingListViewManager(
     private val lifeEfficiencyClient: LifeEfficiencyClient,
-    private val autoCompleteService: AutoCompleteService
+    private val autoCompleteService: AutoCompleteService,
 ) : ViewManager {
-
     private var view: View? = null
 
-    override fun onActive(view: View, context: Context) {
+    override fun onActive(
+        view: View,
+        context: Context,
+    ) {
         refreshItems(view, context)
         val addItemText = view.findViewById<AutoCompleteTextView>(R.id.AddToShoppingListItemName)
         setupAddItemButton(addItemText, view, context)
@@ -37,15 +39,15 @@ class ShoppingListViewManager(
             ArrayAdapter(
                 view.context,
                 android.R.layout.select_dialog_item,
-                autoCompleteService.getExistingItems()
-            )
+                autoCompleteService.getExistingItems(),
+            ),
         )
     }
 
     private fun setupAddItemButton(
         addItemText: AutoCompleteTextView,
         view: View,
-        rootContext: Context
+        rootContext: Context,
     ) {
         val addItemQuantity = view.findViewById<EditText>(R.id.AddToShoppingListItemQuantity)
         view.findViewById<Button>(R.id.AddToShoppingListButton).setOnClickListener {
@@ -53,7 +55,7 @@ class ShoppingListViewManager(
                 withContext(Dispatchers.Default) {
                     lifeEfficiencyClient.addToList(
                         addItemText.text.toString(),
-                        addItemQuantity.text.toString().toInt()
+                        addItemQuantity.text.toString().toInt(),
                     )
                 }
             }
@@ -63,17 +65,26 @@ class ShoppingListViewManager(
         }
     }
 
-    private fun refreshItems(rootView: View, rootContext: Context) {
-        val listItems = runBlocking {
-            withContext(Dispatchers.Default) {
-                lifeEfficiencyClient.getListItems()
+    private fun refreshItems(
+        rootView: View,
+        rootContext: Context,
+    ) {
+        val listItems =
+            runBlocking {
+                withContext(Dispatchers.Default) {
+                    lifeEfficiencyClient.getListItems()
+                }
             }
-        }
 
         val listAdapter =
             object : ArrayAdapter<ListItem>(rootContext, R.layout.list_item, listItems) {
                 val inflater = LayoutInflater.from(rootContext)
-                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+
+                override fun getView(
+                    position: Int,
+                    convertView: View?,
+                    parent: ViewGroup,
+                ): View {
                     val view = convertView ?: inflater.inflate(R.layout.list_item, parent, false)
                     val listItem = this.getItem(position)!!
                     val textField = view.findViewById(R.id.textField) as TextView
@@ -86,7 +97,7 @@ class ShoppingListViewManager(
                                     withContext(Dispatchers.Default) {
                                         lifeEfficiencyClient.deleteListItem(
                                             listItem.name,
-                                            listItem.quantity
+                                            listItem.quantity,
                                         )
                                     }
                                 }
@@ -104,7 +115,7 @@ class ShoppingListViewManager(
                                     withContext(Dispatchers.Default) {
                                         lifeEfficiencyClient.completeItem(
                                             listItem.name,
-                                            listItem.quantity
+                                            listItem.quantity,
                                         )
                                     }
                                 }
@@ -123,5 +134,4 @@ class ShoppingListViewManager(
     companion object {
         private const val DEFAULT_QUANTITY = 1
     }
-
 }

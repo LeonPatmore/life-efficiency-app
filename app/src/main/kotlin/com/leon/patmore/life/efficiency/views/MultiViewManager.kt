@@ -3,10 +3,11 @@ package com.leon.patmore.life.efficiency.views
 import android.view.View
 import android.widget.Button
 
-class MultiViewManager(private val menuView: View,
-                       private val menuButton: Button,
-                       private val viewToLayoutId: Map<String, ActiveView>) {
-
+class MultiViewManager(
+    private val menuView: View,
+    private val menuButton: Button,
+    private val viewToLayoutId: Map<String, ActiveView>,
+) {
     init {
         setupButtons()
     }
@@ -29,12 +30,13 @@ class MultiViewManager(private val menuView: View,
             return
         }
         for (activeView in viewToLayoutId.values) {
-            if (activeView !== viewToLayoutId[viewName]) activeView.view.visibility = View.GONE else {
+            if (activeView !== viewToLayoutId[viewName]) {
+                activeView.view.visibility = View.GONE
+            } else {
                 activeView.onActive()
                 activeView.view.visibility = View.VISIBLE
             }
         }
         menuView.visibility = View.GONE
     }
-
 }
