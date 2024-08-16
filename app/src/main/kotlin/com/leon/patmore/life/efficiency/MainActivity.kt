@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration
+import com.leon.patmore.life.efficiency.views.GoalsViewManager
 import com.leon.patmore.life.efficiency.views.shopping.ShoppingAddPurchaseViewManager
 import com.leon.patmore.life.efficiency.views.shopping.ShoppingHistoryViewManager
 import com.leon.patmore.life.efficiency.views.shopping.ShoppingListViewManager
@@ -82,10 +83,13 @@ class MainActivity : AppCompatActivity() {
         )
     private val todoMenuSubViews = mutableListOf(todoListViewData, todoWeeklyViewData, todoHistoryViewData)
 
+    private val goalSubView = ViewData(R.id.GoalsButton, R.layout.view_goals, viewManager = GoalsViewManager(lifeEfficiencyClient))
+
     private val viewButtons =
         mutableListOf(
             ViewData(R.id.ShoppingButton, R.layout.view_shopping_menu, subViews = shoppingMenuSubViews),
             ViewData(R.id.TodoButton, R.layout.view_todo_menu, subViews = todoMenuSubViews),
+            goalSubView
         )
 
     init {
@@ -110,6 +114,7 @@ class MainActivity : AppCompatActivity() {
         todoListViewData.subViews.add(ViewData(R.id.TodoListBackButton, R.layout.view_todo_menu, subViews = todoMenuSubViews))
         todoWeeklyViewData.subViews.add(ViewData(R.id.TodoWeeklyBackButton, R.layout.view_todo_menu, subViews = todoMenuSubViews))
         todoHistoryViewData.subViews.add(ViewData(R.id.TodoHistoryBackButton, R.layout.view_todo_menu, subViews = todoMenuSubViews))
+        goalSubView.subViews.add(ViewData(R.id.GoalsBackButton, R.layout.view_main_menu, subViews = viewButtons))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
