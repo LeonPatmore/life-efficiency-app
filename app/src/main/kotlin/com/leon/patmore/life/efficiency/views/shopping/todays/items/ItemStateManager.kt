@@ -1,4 +1,4 @@
-package com.leon.patmore.life.efficiency.views.todays.items
+package com.leon.patmore.life.efficiency.views.shopping.todays.items
 
 class ItemStateManager {
 

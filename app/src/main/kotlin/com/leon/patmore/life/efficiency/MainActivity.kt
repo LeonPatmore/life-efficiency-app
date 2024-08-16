@@ -7,7 +7,7 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.leon.patmore.life.efficiency.views.ShoppingListViewManager
+import com.leon.patmore.life.efficiency.views.shopping.ShoppingListViewManager
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClientConfiguration
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
 
@@ -17,17 +17,24 @@ class MainActivity : AppCompatActivity() {
 
     private val lifeEfficiencyClient:LifeEfficiencyClient = LifeEfficiencyClientConfiguration.getLifeEfficiencyClientInstance()
     private val autoCompleteService:AutoCompleteService = AutoCompleteService(lifeEfficiencyClient)
-    private val viewButtons= arrayOf(
-        ViewData(R.id.ShoppingButton, R.layout.shopping_menu,
-            subViews = listOf(ViewData(R.id.ShoppingListButton, R.layout.view_shopping_list,
-                viewManager = ShoppingListViewManager(
-                    lifeEfficiencyClient,
-                    autoCompleteService)))))
+
+    private val shoppingListSubViews = mutableListOf(
+        ViewData(buttonId = R.id.ShoppingListButton,
+            layoutId = R.layout.view_shopping_list,
+            viewManager = ShoppingListViewManager(lifeEfficiencyClient, autoCompleteService)
+        ))
+
+    private val viewButtons= listOf(
+        ViewData(R.id.ShoppingButton, R.layout.view_shopping_menu, subViews = shoppingListSubViews))
+
+    init {
+        shoppingListSubViews.add(ViewData(R.id.ShoppingMenuBackButton, R.layout.view_main_menu, subViews = viewButtons))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<ViewDataBinding>(this, R.layout.main_menu)
-        setupButtons(*viewButtons)
+        DataBindingUtil.setContentView<ViewDataBinding>(this, R.layout.view_main_menu)
+        setupButtons(*viewButtons.toTypedArray())
     }
 
     private fun setupButtons(vararg viewDataList: ViewData) {

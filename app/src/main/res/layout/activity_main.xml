@@ -279,31 +279,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/TodaysItemsLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <ListView
-                android:id="@+id/ShoppingItemList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#ffffff"
-                tools:visibility="visible">
-
-            </ListView>
-
-            <Button
-                android:id="@+id/ConfirmTodayButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/confirm_today_button_text"
-                tools:text="@string/confirm_today_button_text" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/RepeatingItemsLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

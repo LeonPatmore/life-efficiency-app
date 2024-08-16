@@ -1,4 +1,4 @@
-package com.leon.patmore.life.efficiency.views.todays.items
+package com.leon.patmore.life.efficiency.views.shopping.todays.items
 
 import android.content.Context
 import android.graphics.Color
@@ -19,12 +19,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class TodaysItemsView(view: View,
-                      button: Button,
-                      private val listView: ListView,
-                      private val context: Context,
-                      private val confirmButton: Button,
-                      private val lifeEfficiencyClient: LifeEfficiencyClient) : ActiveView(view, button)  {
+class TodaysItemsViewManager(view: View,
+                             button: Button,
+                             private val listView: ListView,
+                             private val context: Context,
+                             private val confirmButton: Button,
+                             private val lifeEfficiencyClient: LifeEfficiencyClient) : ActiveView(view, button)  {
 
     private val itemStateManager = ItemStateManager()
     private val tag = javaClass.name

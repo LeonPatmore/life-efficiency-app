@@ -16,7 +16,7 @@
 
             <include
                 android:id="@+id/ShoppingButton"
-                layout="@layout/large_button"
+                layout="@layout/template_large_button"
                 app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_shopping_cart_24)}"
                 app:myText="@{`Shopping!`}" />
         </LinearLayout>
@@ -30,7 +30,7 @@
 
             <include
                 android:id="@+id/TodoButton"
-                layout="@layout/large_button"
+                layout="@layout/template_large_button"
                 app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_checklist_24)}"
                 app:myText="@{`TODO!`}" />
 
