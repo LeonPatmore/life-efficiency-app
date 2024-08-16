@@ -50,13 +50,13 @@ interface LifeEfficiencyClient {
     ): List<TodoItem>
 
     fun updateTodoItemStatus(
-        id: Int,
+        id: String,
         status: String,
     )
 
     fun addTodo(desc: String)
 
-    fun getWeekly(): List<WeeklyItem>
+    fun getWeekly(setId: String?): List<WeeklyItem>
 
     fun completeWeeklyItem(id: Int)
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/ShoppingListLayout"
@@ -8,18 +8,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Shopping List"
-            android:textAlignment="center"
-            android:textColor="@color/titleText"
-            android:padding="10dp"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"/>
+        <include layout="@layout/template_title_text"
+            app:myText="@{`Shopping List`}" />
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <include layout="@layout/template_divider" />
 
         <LinearLayout
             android:id="@+id/AddToShoppingListLayout"
@@ -33,50 +25,44 @@
                 android:id="@+id/AddToShoppingListItemName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
                 android:autofillHints="purchase"
                 android:ems="10"
                 android:hint="@string/purchase_name_default_text"
-                android:inputType="textShortMessage" />
+                android:inputType="textShortMessage"
+                android:minHeight="48dp" />
 
             <EditText
                 android:id="@+id/AddToShoppingListItemQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
                 android:autofillHints="quantity"
                 android:hint="@string/quantity_button_hint"
                 android:inputType="numberSigned"
+                android:minHeight="48dp"
                 android:text="@string/default_quantity" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal"
-                android:weightSum="10">
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
 
-                <Button
-                    android:id="@+id/AddToShoppingListButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="5"
-                    android:text="@string/add_to_list_send_button_text"
-                    tools:text="@string/add_to_list_send_button_text" />
+                <include
+                    android:id="@+id/ShoppingListAddButton"
+                    layout="@layout/template_small_button"
+                    app:myText="@{`Add to List`}" />
+
+                <include
+                    android:id="@+id/ShoppingListBackButton"
+                    layout="@layout/template_small_button"
+                    app:myText="@{`Back`}" />
             </LinearLayout>
         </LinearLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
+        <include layout="@layout/template_divider" />
 
-        <ListView
+        <include
             android:id="@+id/ShoppingList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            tools:visibility="visible" />
+            layout="@layout/template_list_view"/>
 
     </LinearLayout>
 </layout>

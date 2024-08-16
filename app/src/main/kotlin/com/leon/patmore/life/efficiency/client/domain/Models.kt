@@ -38,7 +38,7 @@ class LifeEfficiencyException : RuntimeException {
 }
 
 data class TodoItem(
-    val id: Int,
+    val id: String,
     val desc: String,
     val status: String,
     val date_added: String,

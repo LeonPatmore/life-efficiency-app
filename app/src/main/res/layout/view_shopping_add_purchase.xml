@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ShoppingAddPurchaseLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/template_title_text"
+            app:myText="@{`Add Purchase`}" />
+
+        <include layout="@layout/template_divider" />
+
+        <AutoCompleteTextView
+            android:id="@+id/ShoppingAddPurchaseNameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="purchase"
+            android:ems="10"
+            android:hint="@string/purchase_name_default_text"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/ShoppingAddPurchaseQuantityField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="quantity"
+            android:ems="10"
+            android:hint="@string/quantity_button_hint"
+            android:inputType="numberSigned"
+            android:text="@string/default_quantity" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+            <include
+                android:id="@+id/ShoppingAddPurchaseSendButton"
+                layout="@layout/template_small_button"
+                app:myText="@{`Add Purchase`}" />
+
+            <include
+                android:id="@+id/ShoppingAddPurchaseBackButton"
+                layout="@layout/template_small_button"
+                app:myText="@{`Back`}" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

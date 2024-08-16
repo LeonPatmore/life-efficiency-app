@@ -1,6 +1,5 @@
 package com.leon.patmore.life.efficiency.views.shopping
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,32 +24,23 @@ import java.lang.Exception
 class ShoppingListViewManager(
     private val lifeEfficiencyClient: LifeEfficiencyClient,
     private val autoCompleteService: AutoCompleteService,
-) : ViewManager {
-    private var view: View? = null
-
-    override fun onActive(
-        view: View,
-        context: Context,
-    ) {
-        refreshItems(view, context)
-        val addItemText = view.findViewById<AutoCompleteTextView>(R.id.AddToShoppingListItemName)
-        setupAddItemButton(addItemText, view, context)
+) : ViewManager() {
+    override fun onActive() {
+        refreshItems()
+        val addItemText = view!!.findViewById<AutoCompleteTextView>(R.id.AddToShoppingListItemName)
+        setupAddItemButton(addItemText)
         addItemText.setAdapter(
             ArrayAdapter(
-                view.context,
+                view!!.context,
                 android.R.layout.select_dialog_item,
                 autoCompleteService.getExistingItems(),
             ),
         )
     }
 
-    private fun setupAddItemButton(
-        addItemText: AutoCompleteTextView,
-        view: View,
-        rootContext: Context,
-    ) {
-        val addItemQuantity = view.findViewById<EditText>(R.id.AddToShoppingListItemQuantity)
-        view.findViewById<Button>(R.id.AddToShoppingListButton).setOnClickListener {
+    private fun setupAddItemButton(addItemText: AutoCompleteTextView) {
+        val addItemQuantity = view!!.findViewById<EditText>(R.id.AddToShoppingListItemQuantity)
+        view!!.findViewById<Button>(R.id.ShoppingListAddButton).setOnClickListener {
             runBlocking {
                 withContext(Dispatchers.Default) {
                     lifeEfficiencyClient.addToList(
@@ -61,14 +51,11 @@ class ShoppingListViewManager(
             }
             addItemText.resetText()
             addItemQuantity.setText(DEFAULT_QUANTITY.toString())
-            refreshItems(view, rootContext)
+            refreshItems()
         }
     }
 
-    private fun refreshItems(
-        rootView: View,
-        rootContext: Context,
-    ) {
+    private fun refreshItems() {
         val listItems =
             runBlocking {
                 withContext(Dispatchers.Default) {
@@ -77,8 +64,8 @@ class ShoppingListViewManager(
             }
 
         val listAdapter =
-            object : ArrayAdapter<ListItem>(rootContext, R.layout.list_item, listItems) {
-                val inflater = LayoutInflater.from(rootContext)
+            object : ArrayAdapter<ListItem>(context!!, R.layout.list_item, listItems) {
+                val inflater = LayoutInflater.from(context)
 
                 override fun getView(
                     position: Int,
@@ -105,7 +92,7 @@ class ShoppingListViewManager(
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-                        onActive(rootView, rootContext)
+                        onActive()
                     }
                     val completeButton = view.findViewById<Button>(R.id.completeButton)
                     completeButton.setOnClickListener {
@@ -123,12 +110,12 @@ class ShoppingListViewManager(
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
-                        onActive(rootView, rootContext)
+                        onActive()
                     }
                     return view
                 }
             }
-        rootView.findViewById<ListView>(R.id.ShoppingList).adapter = listAdapter
+        view!!.findViewById<ListView>(R.id.ShoppingList).adapter = listAdapter
     }
 
     companion object {

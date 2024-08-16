@@ -465,10 +465,10 @@ class LifeEfficiencyClientHttp(
     }
 
     override fun updateTodoItemStatus(
-        id: Int,
+        id: String,
         status: String,
     ) {
-        Log.i(tag, "Updating todo item id [ %d ] to status [ %s ]".format(id, status))
+        Log.i(tag, "Updating todo item id [ $id ] to status [ $status ]")
 
         val httpUrl =
             endpoint
@@ -477,7 +477,7 @@ class LifeEfficiencyClientHttp(
                 .addPathSegment(TODO_PATH)
                 .addPathSegment("list")
                 .build()
-        val body = String.format("{\"id\": %d, \"status\": \"%s\"}", id, status)
+        val body = "{\"id\": \"$id\", \"status\": \"$status\"}"
         val res =
             client
                 .newCall(
@@ -513,20 +513,21 @@ class LifeEfficiencyClientHttp(
         validateResponse(res)
     }
 
-    override fun getWeekly(): List<WeeklyItem> {
+    override fun getWeekly(setId: String?): List<WeeklyItem> {
+        Log.i(tag, "Getting weekly with set ID filter $setId")
         val httpUrl =
             endpoint
                 .toHttpUrlOrNull()!!
                 .newBuilder()
                 .addPathSegment(TODO_PATH)
                 .addPathSegment(WEEKLY_PATH)
-                .build()
+        if (!setId.isNullOrEmpty()) httpUrl.addQueryParameter("set_id", setId)
         return client
             .newCall(
                 Request
                     .Builder()
                     .get()
-                    .url(httpUrl)
+                    .url(httpUrl.build())
                     .build(),
             ).execute()
             .use { jsonArrayToListOfWeeklyItems(JSONArray(it.body!!.string())) }
@@ -715,7 +716,7 @@ class LifeEfficiencyClientHttp(
                 }.map { item: JSONObject ->
                     try {
                         return@map TodoItem(
-                            item.getInt("id"),
+                            item.getString("id"),
                             item.getString("desc"),
                             item.getString("status"),
                             item.getString("date_added"),

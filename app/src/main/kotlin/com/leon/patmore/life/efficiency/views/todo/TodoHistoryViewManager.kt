@@ -1,23 +1,17 @@
-package com.leon.patmore.life.efficiency.views
+package com.leon.patmore.life.efficiency.views.todo
 
-import android.content.Context
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ListView
 import com.leon.patmore.life.efficiency.R
+import com.leon.patmore.life.efficiency.ViewManager
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class TodoHistoryView(
-    view: View,
-    button: Button,
-    private val listView: ListView,
+class TodoHistoryViewManager(
     private val lifeEfficiencyClient: LifeEfficiencyClient,
-    private val context: Context,
-) : ActiveView(view, button) {
+) : ViewManager() {
     override fun onActive() {
         val todoItems =
             runBlocking {
@@ -27,11 +21,11 @@ class TodoHistoryView(
             }
         val listAdapter =
             ArrayAdapter(
-                context,
-                R.layout.simple_list_item,
+                context!!,
+                R.layout.list_item_simple,
                 R.id.textField,
                 todoItems.map { it.desc + " | " + it.date_done },
             )
-        listView.adapter = listAdapter
+        view!!.findViewById<ListView>(R.id.TodoHistoryList).adapter = listAdapter
     }
 }

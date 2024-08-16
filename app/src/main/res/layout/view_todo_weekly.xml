@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/TodoWeeklyLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/template_title_text"
+            app:myText="@{`Todo Weekly`}" />
+
+        <include layout="@layout/template_divider" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <AutoCompleteTextView
+                android:id="@+id/TodoWeeklyFilterText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="set filter"
+                android:inputType="text" />
+
+            <include
+                android:id="@+id/TodoWeeklyFilterButton"
+                layout="@layout/template_small_button"
+                app:myText="@{`Filter`}" />
+
+        </LinearLayout>
+
+        <include layout="@layout/template_divider" />
+
+        <include
+            android:id="@+id/TodoWeeklyBackButton"
+            layout="@layout/template_small_button"
+            app:myText="@{`Back`}" />
+
+
+        <ListView
+            android:id="@+id/TodoWeeklyList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff">
+
+        </ListView>
+
+    </LinearLayout>
+
+</layout>

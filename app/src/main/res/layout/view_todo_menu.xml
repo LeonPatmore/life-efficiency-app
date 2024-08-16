@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/TodoMenuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/TodoListButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    android:id="@+id/TodoListButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_checklist_24)}"
+                    app:myText="@{`Todo List`}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/TodoWeeklyButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TodoListButtonLayout">
+
+                <include
+                    android:id="@+id/TodoWeeklyButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_calendar_view_week_24)}"
+                    app:myText="@{`Weekly Todo`}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/TodoHistoryButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TodoWeeklyButtonLayout">
+
+                <include
+                    android:id="@+id/TodoHistoryButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_history_24)}"
+                    app:myText="@{`Todo History`}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TodoHistoryButtonLayout">
+
+                <include
+                    android:id="@+id/TodoMenuBackButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_arrow_back_24)}"
+                    app:myText="@{`Back`}" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

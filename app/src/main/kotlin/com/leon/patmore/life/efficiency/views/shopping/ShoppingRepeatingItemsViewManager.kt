@@ -1,6 +1,5 @@
-package com.leon.patmore.life.efficiency.views
+package com.leon.patmore.life.efficiency.views.shopping
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import android.widget.ListView
 import android.widget.TextView
 import com.leon.patmore.life.efficiency.AutoCompleteService
 import com.leon.patmore.life.efficiency.R
+import com.leon.patmore.life.efficiency.ViewManager
 import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
 import com.leon.patmore.life.efficiency.client.domain.RepeatingItem
 import com.leon.patmore.life.efficiency.resetText
@@ -18,38 +18,35 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
-class RepeatingItemView(
-    view: View,
-    button: Button,
-    addButton: Button,
-    private val addItemText: AutoCompleteTextView,
-    private val list: ListView,
+class ShoppingRepeatingItemsViewManager(
     private val lifeEfficiencyClient: LifeEfficiencyClient,
     private val autoCompleteService: AutoCompleteService,
-    private val context: Context,
-) : ActiveView(view, button) {
-    init {
-        addButton.setOnClickListener {
-            runBlocking {
-                withContext(Dispatchers.Default) {
-                    lifeEfficiencyClient.addRepeatingItem(addItemText.text.toString())
-                }
-            }
-            addItemText.resetText()
-            refreshItems()
-        }
-    }
+) : ViewManager() {
+    private var addItemText: AutoCompleteTextView? = null
 
     override fun onActive() {
-        addItemText.setAdapter(
+        addItemText = view!!.findViewById(R.id.ShoppingRepeatingItemsAddItemField)
+        addItemText!!.setAdapter(
             ArrayAdapter(
-                view.context,
+                view!!.context,
                 android.R.layout.select_dialog_item,
                 autoCompleteService.getExistingItems(),
             ),
         )
-
+        setupAddButton()
         refreshItems()
+    }
+
+    private fun setupAddButton() {
+        view!!.findViewById<Button>(R.id.ShoppingRepeatingItemsAddButton).setOnClickListener {
+            runBlocking {
+                withContext(Dispatchers.Default) {
+                    lifeEfficiencyClient.addRepeatingItem(addItemText!!.text.toString())
+                }
+            }
+            addItemText!!.resetText()
+            refreshItems()
+        }
     }
 
     private fun refreshItems() {
@@ -63,7 +60,7 @@ class RepeatingItemView(
             }
 
         val listAdapter =
-            object : ArrayAdapter<RepeatingItemData>(context, R.layout.repeating_item_list_item, repeatingItems) {
+            object : ArrayAdapter<RepeatingItemData>(context!!, R.layout.list_item_shopping_repeating_item, repeatingItems) {
                 val inflater = LayoutInflater.from(context)
 
                 override fun getView(
@@ -71,22 +68,22 @@ class RepeatingItemView(
                     convertView: View?,
                     parent: ViewGroup,
                 ): View {
-                    val view = convertView ?: inflater.inflate(R.layout.repeating_item_list_item, parent, false)
+                    val view = convertView ?: inflater.inflate(R.layout.list_item_shopping_repeating_item, parent, false)
                     val repeatingItem = this.getItem(position)!!
 
-                    val nameField = view.findViewById(R.id.repeatingItemName) as TextView
+                    val nameField: TextView = view.findViewById(R.id.repeatingItemName)
                     nameField.text = repeatingItem.name
 
-                    val averageGapDaysField = view.findViewById(R.id.repeatingItemAverageGapDays) as TextView
+                    val averageGapDaysField: TextView = view.findViewById(R.id.repeatingItemAverageGapDays)
                     averageGapDaysField.text = "Avg gap: ${repeatingItem.repeatingItem.averageGapDays}"
 
-                    val daysSinceLastBoughtField = view.findViewById(R.id.repeatingItemDaysSinceLastBought) as TextView
+                    val daysSinceLastBoughtField: TextView = view.findViewById(R.id.repeatingItemDaysSinceLastBought)
                     daysSinceLastBoughtField.text = "Days since last: ${repeatingItem.repeatingItem.daysSinceLastBought}"
 
                     return view
                 }
             }
-        list.adapter = listAdapter
+        view!!.findViewById<ListView>(R.id.ShoppingRepeatingItemsList).adapter = listAdapter
     }
 
     data class RepeatingItemData(

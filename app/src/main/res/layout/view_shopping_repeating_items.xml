@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/ShoppingRepeatingItemsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/template_title_text"
+            app:myText="@{`Repeating Items`}" />
+
+        <include layout="@layout/template_divider" />
+
+        <LinearLayout
+            android:id="@+id/ShoppingRepeatingItemsAddLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <AutoCompleteTextView
+                android:id="@+id/ShoppingRepeatingItemsAddItemField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints="repeating_item"
+                android:ems="10"
+                android:hint="@string/add_repeating_item_item_default_text"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+                <include
+                    android:id="@+id/ShoppingRepeatingItemsAddButton"
+                    layout="@layout/template_small_button"
+                    app:myText="@{`Add`}" />
+
+                <include
+                    android:id="@+id/ShoppingRepeatingItemsBackButton"
+                    layout="@layout/template_small_button"
+                    app:myText="@{`Back`}" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <include layout="@layout/template_divider" />
+
+        <include
+            android:id="@+id/ShoppingRepeatingItemsList"
+            layout="@layout/template_list_view" />
+
+    </LinearLayout>
+
+</layout>
