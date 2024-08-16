@@ -5,19 +5,27 @@ import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.Locale.ENGLISH
 
-data class ListItem(val name: String, val quantity: Int) {
-    override fun toString(): String {
-        return "$name X $quantity"
-    }
+data class ListItem(
+    val name: String,
+    val quantity: Int,
+) {
+    override fun toString(): String = "$name X $quantity"
 }
 
-data class HistoryItem(val name: String, val quantity: Int, val date_purchased: String) {
-    override fun toString(): String {
-        return "$name X $quantity | $date_purchased"
-    }
+data class HistoryItem(
+    val name: String,
+    val quantity: Int,
+    val date_purchased: String,
+) {
+    override fun toString(): String = "$name X $quantity | $date_purchased"
 }
 
-data class WeeklyItem(val id: Int, val day: Int, val desc: String, val complete: Boolean) {
+data class WeeklyItem(
+    val id: Int,
+    val day: Int,
+    val desc: String,
+    val complete: Boolean,
+) {
     override fun toString(): String {
         val dayOfWeek = DayOfWeek.of(day).getDisplayName(TextStyle.SHORT, ENGLISH)
         return "$dayOfWeek: $desc"
@@ -29,12 +37,20 @@ class LifeEfficiencyException : RuntimeException {
     constructor(message: String?, cause: Throwable?) : super(message, cause)
 }
 
-data class TodoItem(val id: Int,
-                    val desc: String,
-                    val status: String,
-                    val date_added: String,
-                    val date_done: String)
+data class TodoItem(
+    val id: String,
+    val desc: String,
+    val status: String,
+    val date_added: String,
+    val date_done: String,
+)
 
-data class Goal(val name: String, val progress: String)
+data class Goal(
+    val name: String,
+    val progress: String,
+)
 
-data class RepeatingItem(val averageGapDays: Int?, val daysSinceLastBought: Int?)
+data class RepeatingItem(
+    val averageGapDays: Int?,
+    val daysSinceLastBought: Int?,
+)

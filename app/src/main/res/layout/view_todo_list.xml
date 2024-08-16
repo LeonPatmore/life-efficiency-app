@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/TodoListLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/template_title_text"
+            app:myText="@{`Todo List`}" />
+
+        <include layout="@layout/template_divider" />
+
+        <LinearLayout
+            android:id="@+id/TodoListAddLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/TodoListAddText"
+                android:layout_width="wrap_content"
+                android:minHeight="48dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_todo_text_hint"
+                android:importantForAutofill="no"
+                android:inputType="text" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <include
+                    android:id="@+id/TodoListAddButton"
+                    layout="@layout/template_small_button"
+                    app:myText="@{`Add to List`}" />
+
+                <include
+                    android:id="@+id/TodoListBackButton"
+                    layout="@layout/template_small_button"
+                    app:myText="@{`Back`}" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <include layout="@layout/template_divider" />
+
+        <ListView
+            android:id="@+id/TodoListList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff">
+
+        </ListView>
+
+    </LinearLayout>
+
+</layout>

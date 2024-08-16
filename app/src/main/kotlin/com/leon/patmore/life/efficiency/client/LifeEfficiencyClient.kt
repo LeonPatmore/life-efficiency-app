@@ -1,4 +1,4 @@
-package com.leon.patmore.life.efficiency.client;
+package com.leon.patmore.life.efficiency.client
 
 import com.leon.patmore.life.efficiency.client.domain.Goal
 import com.leon.patmore.life.efficiency.client.domain.HistoryItem
@@ -8,14 +8,19 @@ import com.leon.patmore.life.efficiency.client.domain.TodoItem
 import com.leon.patmore.life.efficiency.client.domain.WeeklyItem
 
 interface LifeEfficiencyClient {
-
     fun getListItems(): List<ListItem>
 
     fun getTodayItems(): List<String>
 
-    fun addPurchase(name: String, quantity: Int)
+    fun addPurchase(
+        name: String,
+        quantity: Int,
+    )
 
-    fun addToList(name: String, quantity: Int)
+    fun addToList(
+        name: String,
+        quantity: Int,
+    )
 
     fun completeItems(items: List<String>)
 
@@ -25,24 +30,35 @@ interface LifeEfficiencyClient {
 
     fun addRepeatingItem(item: String)
 
-    fun deleteListItem(name: String, quantity: Int)
+    fun deleteListItem(
+        name: String,
+        quantity: Int,
+    )
 
-    fun completeItem(name: String, quantity: Int)
+    fun completeItem(
+        name: String,
+        quantity: Int,
+    )
 
-    fun getHistory() : List<HistoryItem>
+    fun getHistory(): List<HistoryItem>
 
-    fun todoNonCompleted() : List<TodoItem>
+    fun todoNonCompleted(): List<TodoItem>
 
-    fun todoList(status: String? = null, sorted: Boolean = false) : List<TodoItem>
+    fun todoList(
+        status: String? = null,
+        sorted: Boolean = false,
+    ): List<TodoItem>
 
-    fun updateTodoItemStatus(id: Int, status: String)
+    fun updateTodoItemStatus(
+        id: String,
+        status: String,
+    )
 
     fun addTodo(desc: String)
 
-    fun getWeekly(): List<WeeklyItem>
+    fun getWeekly(setId: String?): List<WeeklyItem>
 
     fun completeWeeklyItem(id: Int)
 
     fun getGoals(): Map<String, Map<String, List<Goal>>>
-
 }

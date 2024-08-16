@@ -1,0 +1,5 @@
+<resources>
+    <declare-styleable name="CustomView">
+        <attr name="icon" format="reference" />
+    </declare-styleable>
+</resources>

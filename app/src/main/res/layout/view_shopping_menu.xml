@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ShoppingMenuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/ShoppingListButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include
+                    android:id="@+id/ShoppingListButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_shopping_cart_24)}"
+                    app:myText="@{`Shopping List`}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/TodayItemsButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ShoppingListButtonLayout">
+
+                <include
+                    android:id="@+id/TodaysItemsButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_today_24)}"
+                    app:myText="@{`Today's Items`}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/AddPurchaseButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/TodayItemsButtonLayout">
+
+                <include
+                    android:id="@+id/AddPurchaseButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_money_24)}"
+                    app:myText="@{`Add Purchase`}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ShoppingHistoryButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/AddPurchaseButtonLayout">
+
+                <include
+                    android:id="@+id/ShoppingHistoryButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_history_24)}"
+                    app:myText="@{`Shopping History`}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ShoppingRepeatingItemsButtonLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ShoppingHistoryButtonLayout">
+
+                <include
+                    android:id="@+id/ShoppingRepeatingItemsButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_repeat_24)}"
+                    app:myText="@{`Shopping Repeated Items`}" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ShoppingRepeatingItemsButtonLayout">
+
+                <include
+                    android:id="@+id/ShoppingMenuBackButton"
+                    layout="@layout/template_large_button"
+                    app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_arrow_back_24)}"
+                    app:myText="@{`Back`}" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

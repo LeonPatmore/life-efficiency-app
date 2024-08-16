@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="myText"
+            type="String" />
+    </data>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:padding="5dp"
+        android:text="@{myText}"
+        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+        app:cornerRadius="15dp"
+        app:layout_constraintWidth_max="320dp" />
+
+</layout>
