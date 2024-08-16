@@ -124,7 +124,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupButtons(vararg viewDataList: ViewData) {
         viewDataList.forEach { viewData ->
-            val button = findViewById<Button>(viewData.buttonId)!!
+            val view = findViewById<View>(viewData.buttonId)!!
+            val button = if (view is Button) view else view.findViewById(R.id.Button)
             button.setOnClickListener {
                 val binding = DataBindingUtil.setContentView<ViewDataBinding>(this, viewData.layoutId)
                 setupButtons(*viewData.subViews.toTypedArray())

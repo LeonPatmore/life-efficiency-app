@@ -1,9 +1,10 @@
 13/10/2020 Add tests
 13/10/2020 Setup CI
-16/08/2024 Make back buttons a different colour
 16/08/2024 Add goals/finance sections to the app
-16/08/2024 Make title a solid colour, text to white?
 16/08/2024 Improve main menu screen
+16/08/2024 Remove all java classes
 
 x 16/08/2024 13/10/2020 Add app icon
 x 07/12/2020 07/07/2023 Setup add repeating item view manager.
+x 16/08/2024 16/08/2024 Make back buttons a different colour
+x 16/08/2024 16/08/2024 Make title a solid colour, text to white?

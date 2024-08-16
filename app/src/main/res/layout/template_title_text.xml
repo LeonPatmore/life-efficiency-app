@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="@{myText}"
+        android:background="@color/colorPrimary"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
         android:textColor="@color/titleText" />

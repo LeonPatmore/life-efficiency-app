@@ -22,7 +22,7 @@
                     android:id="@+id/ShoppingButton"
                     layout="@layout/template_large_button"
                     app:iconRes="@{context.getDrawable(com.leon.patmore.life.efficiency.R.drawable.baseline_shopping_cart_24)}"
-                    app:myText="@{`Shopping!`}" />
+                    app:myText="@{`Shopping!`}"/>
             </LinearLayout>
 
 

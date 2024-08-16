@@ -10,6 +10,10 @@
         <variable
             name="iconRes"
             type="android.graphics.drawable.Drawable" />
+
+        <variable
+            name="background"
+            type="int" />
     </data>
 
     <com.google.android.material.button.MaterialButton
@@ -23,6 +27,6 @@
         app:icon="@{iconRes}"
         app:iconGravity="textEnd"
         app:iconPadding="10dp"
-        app:layout_constraintWidth_max="320dp" />
-
+        app:layout_constraintWidth_max="320dp"
+        android:backgroundTint="@{background == 0 ?  @color/colorPrimary : background}"/>
 </layout>
