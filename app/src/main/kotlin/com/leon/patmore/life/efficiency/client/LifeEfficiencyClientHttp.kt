@@ -67,8 +67,7 @@ class LifeEfficiencyClientHttp(
                         resBody,
                     ),
                 )
-                val jsonObject = JSONObject(resBody)
-                return jsonArrayToListOfItems(jsonObject.getJSONArray("items"))
+                return jsonArrayToListOfItems(JSONArray(resBody))
             }
         } catch (e: IOException) {
             throw LifeEfficiencyException("Problem during HTTP call!", e)
@@ -101,8 +100,7 @@ class LifeEfficiencyClientHttp(
                         resBody,
                     ),
                 )
-                val jsonObject = JSONObject(resBody)
-                return jsonArrayToList(jsonObject.getJSONArray("items"))
+                return jsonArrayToList(JSONArray(resBody))
             }
         } catch (e: IOException) {
             throw LifeEfficiencyException("Problem during HTTP call!", e)
@@ -247,8 +245,7 @@ class LifeEfficiencyClientHttp(
                         resBody,
                     ),
                 )
-                val jsonObject = JSONObject(resBody)
-                return jsonArrayToList(jsonObject.getJSONArray("items"))
+                return jsonArrayToList(JSONArray(resBody))
             }
         } catch (e: IOException) {
             throw LifeEfficiencyException("Problem during HTTP call!", e)
@@ -417,8 +414,7 @@ class LifeEfficiencyClientHttp(
                     .build(),
             ).execute()
             .use {
-                val jsonObject = JSONObject(it.body!!.string())
-                return jsonArrayToListOfHistoryItems(jsonObject.getJSONArray("purchases"))
+                return jsonArrayToListOfHistoryItems(JSONArray(it.body!!.string()))
             }
     }
 
