@@ -122,7 +122,7 @@ class LifeEfficiencyClientHttp(
             ),
         )
         @SuppressLint("DefaultLocale")
-        val body = String.format("{\"name\": \"%s\", \"quantity\": \"%d\"}", name, quantity)
+        val body = String.format("{\"name\": \"%s\", \"quantity\": %d}", name, quantity)
         val requestBody: RequestBody = body.toRequestBody()
         val request: Request =
             try {
@@ -152,7 +152,7 @@ class LifeEfficiencyClientHttp(
             ),
         )
         @SuppressLint("DefaultLocale")
-        val body = String.format("{\"name\": \"%s\", \"quantity\": \"%d\"}", name, quantity)
+        val body = String.format("{\"name\": \"%s\", \"quantity\": %d}", name, quantity)
         val requestBody: RequestBody = body.toRequestBody(JSON_MEDIA_TYPE)
         val request: Request =
             try {
