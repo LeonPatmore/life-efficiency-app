@@ -60,6 +60,11 @@ class TodoListViewManager(
                         }
                         setupTodoList()
                     }
+                    val cancelButton = view.findViewById<Button>(R.id.TodoItemCancelButton)
+                    cancelButton.setOnClickListener {
+                        runBlocking { withContext(Dispatchers.Default) { lifeEfficiencyClient.cancelTodo(todoItem.id) } }
+                        setupTodoList()
+                    }
                     if (todoItem.status == "in_progress") {
                         view.setBackgroundColor(Color.argb(98, 250, 192, 94))
                     } else {

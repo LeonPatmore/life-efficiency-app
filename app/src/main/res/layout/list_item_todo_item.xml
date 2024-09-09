@@ -19,6 +19,15 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/TodoItemCancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/design_default_color_background"
+            android:text="@string/TodoItemCancelButtonText"
+            android:textSize="11sp"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
             android:id="@+id/TodoItemInProgressButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

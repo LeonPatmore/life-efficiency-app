@@ -509,6 +509,27 @@ class LifeEfficiencyClientHttp(
         validateResponse(res)
     }
 
+    override fun cancelTodo(id: String) {
+        val httpUrl =
+            endpoint
+                .toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(TODO_PATH)
+                .addPathSegment("list")
+                .addPathSegment(id)
+                .build()
+        val res =
+            client
+                .newCall(
+                    Request
+                        .Builder()
+                        .delete()
+                        .url(httpUrl)
+                        .build(),
+                ).execute()
+        validateResponse(res)
+    }
+
     override fun getWeekly(setId: String?): List<WeeklyItem> {
         Log.i(tag, "Getting weekly with set ID filter $setId")
         val httpUrl =
