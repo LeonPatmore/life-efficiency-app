@@ -42,7 +42,7 @@ class ShoppingTodaysItemsViewManager(
             }
         itemStateManager.clear()
         val listAdapter =
-            object : ArrayAdapter<String>(context!!, R.layout.list_item_simple, todaysItems) {
+            object : ArrayAdapter<String>(context!!, R.layout.list_item_today, todaysItems) {
                 val inflater = LayoutInflater.from(context)
 
                 override fun getView(
@@ -51,13 +51,22 @@ class ShoppingTodaysItemsViewManager(
                     parent: ViewGroup,
                 ): View {
                     val view =
-                        convertView ?: inflater.inflate(R.layout.list_item_simple, parent, false)
+                        convertView ?: inflater.inflate(R.layout.list_item_today, parent, false)
                     val thisItem = this.getItem(position)!!
                     val textField: TextView = view.findViewById(R.id.textField)
                     textField.textSize = 20f
                     textField.text = thisItem
                     setItemBackground(view, itemStateManager.itemActive(thisItem))
                     textField.setOnClickListener { onItemClicked(view, position) }
+                    val ignoreButton = view.findViewById<Button>(R.id.ignoreButton)
+                    ignoreButton.setOnClickListener {
+                        runBlocking {
+                            withContext(Dispatchers.Default) {
+                                lifeEfficiencyClient.addIgnore(thisItem)
+                            }
+                        }
+                        refreshList()
+                    }
                     return view
                 }
             }

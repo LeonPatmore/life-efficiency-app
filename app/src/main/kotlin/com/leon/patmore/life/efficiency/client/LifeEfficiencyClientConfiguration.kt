@@ -1,38 +1,40 @@
-package com.leon.patmore.life.efficiency.client;
+package com.leon.patmore.life.efficiency.client
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.OkHttpClient;
+import okhttp3.OkHttpClient
+import java.net.MalformedURLException
+import java.net.URL
+import java.util.concurrent.TimeUnit
 
 object LifeEfficiencyClientConfiguration {
-
-    private var OK_HTTP_CLIENT_INSTANCE: OkHttpClient? = null
-    private var LIFE_EFFICIENCY_CLIENT_INSTANCE: LifeEfficiencyClient? = null
+    private var okHttpClient: OkHttpClient? = null
+    private var lifeEfficiencyClient: LifeEfficiencyClient? = null
     private const val HTTP_ENDPOINT = "https://k80y14r3ok.execute-api.eu-west-1.amazonaws.com/Prod/"
 
     private fun getOkHttpClientInstance(): OkHttpClient {
-        if (OK_HTTP_CLIENT_INSTANCE == null) {
-            OK_HTTP_CLIENT_INSTANCE = OkHttpClient.Builder()
+        if (okHttpClient == null) {
+            okHttpClient =
+                OkHttpClient
+                    .Builder()
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .build()
         }
-        return OK_HTTP_CLIENT_INSTANCE!!
+        return okHttpClient!!
     }
 
     fun getLifeEfficiencyClientInstance(): LifeEfficiencyClient {
-        if (LIFE_EFFICIENCY_CLIENT_INSTANCE == null) {
+        if (lifeEfficiencyClient == null) {
             try {
-                LIFE_EFFICIENCY_CLIENT_INSTANCE = LifeEfficiencyClientHttp(
-                    URL(HTTP_ENDPOINT), getOkHttpClientInstance())
+                lifeEfficiencyClient =
+                    LifeEfficiencyClientHttp(
+                        URL(HTTP_ENDPOINT),
+                        getOkHttpClientInstance(),
+                    )
             } catch (e: MalformedURLException) {
                 throw RuntimeException(e)
             }
         }
-        return LIFE_EFFICIENCY_CLIENT_INSTANCE!!
+        return lifeEfficiencyClient!!
     }
-
 }

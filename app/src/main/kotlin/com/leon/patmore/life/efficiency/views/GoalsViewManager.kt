@@ -1,23 +1,23 @@
- package com.leon.patmore.life.efficiency.views
+package com.leon.patmore.life.efficiency.views
 
- import android.graphics.Color
- import android.view.LayoutInflater
- import android.view.View
- import android.view.ViewGroup
- import android.widget.ArrayAdapter
- import android.widget.ListView
- import android.widget.TextView
- import com.leon.patmore.life.efficiency.R
- import com.leon.patmore.life.efficiency.ViewManager
- import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
- import com.leon.patmore.life.efficiency.client.domain.Goal
- import kotlinx.coroutines.Dispatchers
- import kotlinx.coroutines.runBlocking
- import kotlinx.coroutines.withContext
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import android.widget.TextView
+import com.leon.patmore.life.efficiency.R
+import com.leon.patmore.life.efficiency.ViewManager
+import com.leon.patmore.life.efficiency.client.LifeEfficiencyClient
+import com.leon.patmore.life.efficiency.client.domain.Goal
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 
- class GoalsViewManager(
+class GoalsViewManager(
     private val lifeEfficiencyClient: LifeEfficiencyClient,
- ) : ViewManager() {
+) : ViewManager() {
     override fun onActive() {
         val goals = getGoalsAsList()
         val listAdapter =
@@ -70,4 +70,4 @@
         }
         return finalGoals.reversed()
     }
- }
+}

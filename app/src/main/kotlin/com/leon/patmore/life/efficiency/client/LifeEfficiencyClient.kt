@@ -63,4 +63,6 @@ interface LifeEfficiencyClient {
     fun completeWeeklyItem(id: Int)
 
     fun getGoals(): Map<String, Map<String, List<Goal>>>
+
+    fun addIgnore(itemName: String)
 }

@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         mutableListOf(
             ViewData(R.id.ShoppingButton, R.layout.view_shopping_menu, subViews = shoppingMenuSubViews),
             ViewData(R.id.TodoButton, R.layout.view_todo_menu, subViews = todoMenuSubViews),
-            goalSubView
+            goalSubView,
         )
 
     init {

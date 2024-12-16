@@ -613,6 +613,27 @@ class LifeEfficiencyClientHttp(
             }
     }
 
+    override fun addIgnore(itemName: String) {
+        val httpUrl =
+            endpoint
+                .toHttpUrlOrNull()!!
+                .newBuilder()
+                .addPathSegment(SHOPPING_PATH)
+                .addPathSegment(SHOPPING_IGNORE_SUB_PATH)
+                .build()
+        val body = "{\"item_name\": \"$itemName\"}"
+        val res =
+            client
+                .newCall(
+                    Request
+                        .Builder()
+                        .post(body.toRequestBody(JSON_MEDIA_TYPE))
+                        .url(httpUrl)
+                        .build(),
+                ).execute()
+        validateResponse(res)
+    }
+
     private fun validateResponse(res: Response) {
         val body = res.body?.string()
         Log.d(tag, "Response code [ ${res.code} ] with body [ $body ]")
@@ -631,6 +652,7 @@ class LifeEfficiencyClientHttp(
         private const val SHOPPING_ITEMS_PATH = "items"
         private const val SHOPPING_REPEATING_PATH = "repeating"
         private const val SHOPPING_REPEATING_DETAILS_PATH = "repeating-details"
+        private const val SHOPPING_IGNORE_SUB_PATH = "ignore"
         private const val TODO_PATH = "todo"
         private const val WEEKLY_PATH = "weekly"
         private const val GOALS_PATH = "goals"

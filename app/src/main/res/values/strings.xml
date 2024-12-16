@@ -25,4 +25,5 @@
     <string name="ShoppingListButtonText">Shopping List</string>
     <string name="GoalsButtonText">Goals</string>
     <string name="TodoItemCancelButtonText">Cancel</string>
+    <string name="IgnoreButtonText">Ignore</string>
 </resources>
