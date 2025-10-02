@@ -31,7 +31,7 @@ class GoalsViewManager(
                 ): View {
                     val view = convertView ?: inflater.inflate(R.layout.list_item_simple, parent, false)
                     val currentGoal = this.getItem(position)!!
-                    val textField = view.findViewById(R.id.textField) as TextView
+                    val textField: TextView = view.findViewById(R.id.textField)
                     val text = "[ ${currentGoal.first} - ${currentGoal.second} ] : ${currentGoal.third.name}"
                     textField.text = text
                     textField.textSize = 20f
@@ -68,6 +68,20 @@ class GoalsViewManager(
                 }
             }
         }
+        finalGoals.sortWith(Comparator { firstGoal, secondGoal ->
+            if (firstGoal.first.toInt() > secondGoal.first.toInt()) {
+                return@Comparator 1
+            } else if (firstGoal.first.toInt() == secondGoal.first.toInt()) {
+                if (firstGoal.second.substring(1 ).toInt() > secondGoal.second.substring(1).toInt()) {
+                    return@Comparator 1
+                } else {
+                    return@Comparator -1
+                }
+            } else {
+                return@Comparator -1
+            }
+        })
+
         return finalGoals.reversed()
     }
 }
